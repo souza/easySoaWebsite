@@ -148,16 +148,16 @@ body { /*background-color:#959595;*/
 }
 
 #connexionPanel{
-	-moz-border-radius:  0 0 8px 8px;
-	-webkit-border-radius:  0 0 8px 8px;
-	border-radius: 0 0 8px 8px;
-    position:absolute;
-    right:200px;
-    float:right;
-    background-color: #B5E655;
+	background-color: #B5E655;
+    border-color: grey;
+    border-radius: 0 0 8px 8px;
     border-style: solid;
-	border-color: grey;
-	border-width: 0 1px 1px 1px;
+    border-width: 0 1px 1px;
+    float: right;
+    position: absolute;
+    right: 0;
+    top: 0;
+    color: #000000;
 }
 
 #connexionLink{

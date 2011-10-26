@@ -1,7 +1,7 @@
 #parse("banner.html")
 #parse("header.html")
 #parse("roundedDiv.html")
-<div id="welcome-title">Find a service</div>
+<div id="welcome-title">Find applications</div>
 #set($applications = $request.getSession().getAttribute("serviceSearchResult"))
 <div align="center">
     <form METHOD="POST" ACTION="/easySoa/findService">
