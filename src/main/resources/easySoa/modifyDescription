@@ -1,0 +1,4 @@
+#set($app = $request.getSession().getAttribute("app"))
+#set($app = $serviceManager.setDescription($app,$description))
+$request.getSession().setAttribute("app",$app)
+$response.sendRedirect($request.getHeader("Referer"))

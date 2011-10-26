@@ -1,0 +1,4 @@
+#set($user = $friends.removeFriend($request.getSession().getAttribute("user"),$friend))
+$request.getSession().setAttribute("user",$user)
+$request.getSession().setAttribute("messageFriendRequest","You have removed a friend")
+$response.sendRedirect("friends.html")

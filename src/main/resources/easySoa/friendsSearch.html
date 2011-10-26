@@ -1,0 +1,26 @@
+#parse("banner.html")
+#parse("header.html")
+#parse("roundedDiv.html")
+#set($user = $request.getSession().getAttribute("user"))
+#set($friends = $request.getSession().getAttribute("friends"))
+<div id="welcome-title">My friends</div>
+<script type="text/javascript">
+    activateMenuTabSelected('friends');
+</script>
+<div id="rounded-div-content">
+    #foreach($friend in $friends)
+    <div id="friendsView">
+        Name : $friend.getUserName()  <br/>
+        Surname : $friend.getSurname() <br/>
+        Birthday : $friend.getBirthday()<br/>
+        Town : $friend.getTown()<br/>
+        Country : $friend.getCountry()<br/>
+        <form METHOD="POST" ACTION="/easySoa/addFriend">
+            <input type="hidden" id="friend" name="friend" value="$friend.getId()" />
+            <input type="hidden" id="userId" name="userId" value="$user.getId()" />
+            <input type="submit" class="orange button" value="Add to my friends" />
+        </form>
+    </div>
+    #end
+</div>
+#parse("footpage.html")

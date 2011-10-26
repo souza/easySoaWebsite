@@ -1,0 +1,30 @@
+#parse("banner.html")
+#parse("header.html") 
+#set($app = $request.getSession().getAttribute("app"))
+<script type="text/javascript">
+	activateMenuTabSelected('services');
+	displayTab('editor_frame');
+</script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#edit').cluetip({
+			splitTitle : '|',
+			showTitle : false
+		});
+	});
+</script>
+<script src="js/ideActions.js"></script> 
+
+<div id="ide">
+	<div id="serviceView"></div>
+	<div id="component_frame">
+		<div id="menuObj"></div>
+		<div id="component_frame_content"></div>
+	</div>
+</div>
+<script>
+	show();
+</script>
+
+</body>
+</html>

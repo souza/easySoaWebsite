@@ -1,0 +1,29 @@
+#parse("banner.html")
+#parse("header.html")
+#parse("roundedDiv.html")
+<div id="welcome-title">Find a service</div>
+#set($applications = $request.getSession().getAttribute("serviceSearchResult"))
+<div align="center">
+    <form METHOD="POST" ACTION="/easySoa/findService">
+        Service keywords (separated by spaces):
+        <input type="text" id="service" name="service"/>
+        <input type="submit" class="orange button" value="Search" />
+    </form>
+</div>
+<table id="table">
+    #foreach($appli in $applications)
+        #if($velocityCount%2==0)
+    <tr id="white">
+        #else
+    <tr id="otherWhite">
+        #end
+        <td>
+            $appli.getName()
+        </td>
+        <td>
+            $appli.getDescription()
+        </td>
+    </tr>
+    #end
+</table>
+#parse("footpage.html")

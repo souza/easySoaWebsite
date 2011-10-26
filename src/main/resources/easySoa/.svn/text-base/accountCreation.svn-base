@@ -1,0 +1,3 @@
+$frascati.setProperty($componentPath, $propertyName, $value)
+
+$response.sendRedirect($request.getHeader("Referer"))

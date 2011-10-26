@@ -1,0 +1,51 @@
+#parse("banner.html")
+#parse("header.html")
+#parse("roundedDiv.html")
+<div id="welcome-title">Create service</div>
+
+<script type="text/javascript">
+    activateMenuTabSelected('create');
+</script>
+<div id="friends">
+    <FORM METHOD="POST" ACTION="/easySoa/serviceCreation" >
+        <table id="table">
+            <tr>
+                <td>
+                    Service name :
+                </td>
+                <td>
+                    <input type="text" name="name" id="name" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Description :
+                </td>
+                <td>
+                    <input type="text" name="description" id="description" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Package :
+                </td>
+                <td>
+                    <input type="text" name="package" id="package" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Template name :
+                </td>
+                <td>
+                    <input type="text" name="template" id="template" />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center"><input type="submit" class="orange button" value="Create service" />
+                </td>
+            </tr>
+        </table>
+    </FORM>
+</div>
+#parse("footpage.html")

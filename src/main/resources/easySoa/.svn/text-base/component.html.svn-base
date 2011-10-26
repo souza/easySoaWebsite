@@ -1,0 +1,127 @@
+#parse("header.html")
+
+#set( $componentPath = $request.QueryString.replace("%20", " ") )
+#set( $component = $frascati.getComponent($componentPath) )
+
+#macro( tableOfPorts $ports )
+#if( $ports.size() == 0 )
+None.
+#else
+  <table border>
+    <tr>
+      <th>Name</th>
+      <th>Wired to</th>
+      <th>Bindings</th>
+    </tr>
+#foreach( $port in $ports )
+    <tr>
+      <td>
+        <form method="post" action="port.html">
+          <input type="hidden" name="componentPath" value="$componentPath"/>
+          <input type="hidden" name="portName" value="$port.Name"/>
+          <input type="submit" value="$port.Name"/>
+        </form>
+      </td>
+      <td>$port.WiredTo</td>
+      <td>
+        <ul>
+#foreach( $binding in $port.Bindings )
+        <li>$binding.Kind 
+          <ul>
+            <li>Name: $!binding.Name</li>
+#foreach( $attribute in $binding.Attributes )
+            <li>$attribute.Name: $attribute.Value</li>
+#end
+          </ul>
+        </li>
+#end
+        </ul>
+      </td>
+    </tr>
+#end
+  </table>
+#end
+#end
+
+<ul>
+  <li>
+    Path: $componentPath
+  </li>
+  <li>
+    Name: $component.Name
+  </li>
+  <li>
+    Status: <img src="images/${component.Status}.png" alt="$component.Status" title="$component.Status"/>
+    <a href="start?$componentPath"><img src="images/Start.png" alt="START" title="Start"/></a>
+    <a href="stop?$componentPath"><img src="images/Stop.png" alt="STOP" title="Stop"/></a>
+  </li>
+  <li>
+    Services:
+#tableOfPorts($component.Services)
+  </li>
+  <li>
+    References:
+#tableOfPorts($component.References)
+  </li>
+  <li>
+    Properties:
+#if( $component.Properties.size() == 0 )
+None.
+#else
+    <table border>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Value</th>
+      </tr>
+#foreach( $property in $component.Properties )
+       <tr>
+         <td>$property.Name</td>
+         <td>$property.Type</td>
+         <td>
+           <form method="post" action="setProperty">
+             <input type="hidden" name="componentPath" value="$componentPath"/>
+             <input type="hidden" name="propertyName" value="$property.Name"/>
+             <input type="text" name="value" value="$property.Value"/>
+             <input type="submit" value="Update"/>
+           </form>
+         </td>
+       </tr>
+#end
+#end
+    </table>
+  </li>
+  <li>
+    Components:
+#if( $component.Components.size() == 0 )
+None.
+#else
+    <table border>
+      <tr>
+        <th>Name</th>
+        <th>Status</th>
+      </tr>
+#foreach( $subComponent in $component.Components )
+       <tr>
+         <td>
+           <img src="images/scaComponent.png" title="Component"/>
+#set( $path = $componentPath + '/' + $subComponent.Name )
+#linkToComponent ( $subComponent.Name $path )
+         </td>
+         <td>$subComponent.Status</td>
+       </tr>
+#end
+#end
+    </table>
+  </li>
+</ul>
+
+#set( $idx = $componentPath.lastIndexOf('/') )
+#if($idx > 0)
+  <p>
+#set( $previous = $componentPath.substring(0,$idx) )
+  Back to
+#linkToComponent ( $previous $previous )
+#end
+
+#parse("footpage.html")

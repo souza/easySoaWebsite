@@ -1,0 +1,19 @@
+#parse("header.html")
+
+<table border>
+  <tr>
+    <th>Composite Name</th>
+    <th>Status</th>
+  </tr>
+#foreach($composite in $frascati.DomainComposites)
+  <tr>
+    <td>
+      <img src="images/scaComposite.png" title="Composite" alt="composite"/>
+#linkToComponent ( $composite.Name $composite.Name )
+    </td>
+    <td>$composite.Status</td>
+  </tr>
+#end
+</table>
+
+#parse("footpage.html")

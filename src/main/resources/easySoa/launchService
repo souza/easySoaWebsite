@@ -1,0 +1,5 @@
+#set($app = $request.getSession().getAttribute("app"))
+#set($user = $request.getSession().getAttribute("user"))
+#set($result = $serviceManager.launchService($user,$app))
+$request.getSession.setAttribute("result",$result)
+$response.sendRedirect("resultService.html")

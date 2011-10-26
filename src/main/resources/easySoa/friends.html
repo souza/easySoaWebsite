@@ -1,0 +1,49 @@
+#parse("banner.html")
+#parse("header.html")
+#parse("roundedDiv.html")
+#set($user = $request.getSession().getAttribute("user"))
+<div id="welcome-title">My friends</div>
+<script type="text/javascript">
+    activateMenuTabSelected('friends');
+</script>
+<div id="rounded-div-content">
+    <form METHOD="POST" ACTION="/easySoa/searchFriends">
+        <div id="searchToolBar">
+            Firstname :
+            <input type="text" name="firstname" id="firstname" />
+            Lastname :
+            <input type="text" name="lastname" id="lastname" />
+            Town :
+            <input type="text" name="town" id="town" />
+            <input type="submit" class="orange button" value="Search" />
+        </div>
+    </form>
+    <form METHOD="POST" ACTION="/easySoa/searchFriendsAround">
+        <div id="searchToolBar">
+            Search friends around me :
+            <input type="text" name="kms" id="kms" />
+            kms
+            <input type="submit" class="orange button" value="Search" />
+        </div>
+    </form>
+    $!request.getSession().getAttribute("messageFriendRequest")
+$request.getSession().removeAttribute("messageFriendRequest")
+    #foreach($friend in $user.getFriends())
+    <div id="friendsView">
+        Name : $friend.getUserName()  <br/>
+        Surname : $friend.getSurname() <br/>
+        Birthday : $friend.getBirthday()<br/>
+        Town : $friend.getTown()<br/>
+        Country : $friend.getCountry()<br/>
+        <form METHOD="POST" ACTION="/easySoa/viewFriendServices">
+            <input type="hidden" id="friendId" name="friendId" value="$friend.getId()"/>
+            <input type="submit" class="orange button" value="View friend services" />
+        </form>
+        <form METHOD="POST" ACTION="/easySoa/removeFriend">
+            <input type="hidden" id="friend" name="friend" value="$friend.getId()"/>
+            <input type="submit" class="orange button" value="Remove friend" />
+        </form>
+    </div>
+    #end
+</div>
+#parse("footpage.html")

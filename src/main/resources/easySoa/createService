@@ -1,0 +1,3 @@
+#set($app = $serviceManager.createService($request.getSession().getAttribute("app"),$name,$component,$serviceComponent,$interface,$interfaceType))
+$request.getSession().setAttribute("app",$app)
+$response.sendRedirect($request.getHeader("Referer"))

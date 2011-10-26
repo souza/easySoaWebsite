@@ -1,0 +1,72 @@
+#parse("banner.html")
+#parse("header.html")
+#parse("roundedDiv.html")
+#set($user = $request.getSession().getAttribute("user"))
+<div id="welcome-title">Modify my informations</div>
+<script type="text/javascript">
+activateMenuTabSelected('space');
+</script>
+<div id="rounded-div-content">
+   <form METHOD="POST" ACTION="/easySoa/modifyInformations">
+       <div class="success">
+           $!request.getSession().getAttribute("messageModifyInformations")
+       </div>
+	<div class="center">
+		#if($user.civility.value().equals("Mr")) <input type=RADIO
+			name="civility" value="Mr" checked>Mr <input type=RADIO
+			name="civility" value="Mrs">Mrs <input type=RADIO
+			name="civility" value="Miss">Miss #end
+		#if($user.civility.value().equals("Mrs")) <input type=RADIO
+			name="civility" value="Mr">Mr <input type=RADIO
+			name="civility" value="Mrs" checked>Mrs <input type=RADIO
+			name="civility" value="Miss">Miss #end
+		#if($user.civility.value().equals("Miss")) <input type=RADIO
+			name="civility" value="Mr">Mr <input type=RADIO
+			name="civility" value="Mrs">Mrs <input type=RADIO
+			name="civility" value="Miss" checked>Miss #end
+	</div>
+	<table style="margin-left:auto;margin-right:auto;">
+		<tr>
+			<td><label for="name">Firstname : </label></td>
+			<td><input type="text" name="name" id="name"
+				value="$user.getUserName()" /></td>
+		</tr>
+		<tr>
+			<td><label for="surname">Surname : </label></td>
+			<td><input type="text" name="surname" id="surname"
+				value="$user.getSurname()" /></td>
+		</tr>
+                <tr>
+			<td><label for="birthday">Birthday : </label></td>
+			<td><input type="text" name="birthday" id="birthday"
+				value="$user.getBirthday()" /></td>
+		</tr>
+		<tr>
+			<td><label for="login">Login : </label></td>
+			<td><input type="text" name="login" id="login"
+                                   value="$user.getLogin()" disabled /></td>
+		</tr>
+		<tr>
+			<td><label for="mail">Mail : </label></td>
+			<td><input type="text" name="mail" id="mail"
+				value="$user.getMail()" /></td>
+		</tr>
+                <tr>
+			<td><label for="town">Town : </label></td>
+			<td><input type="text" name="town" id="town"
+				value="$user.getTown()" /></td>
+		</tr>
+		<tr>
+			<td colspan="2" align="center"><input type="submit" class="orange button" value="Modify my informations" /></td>
+		</tr>
+		</table>
+   </form>
+		
+		<table style="margin-left:auto;margin-right:auto;">
+		<tr>
+			<td colspan="2" align="center"><a href="homePage.html" class="orange button">Return to home page</a></td>
+		</tr>
+		</table>
+
+</div>
+#parse("footpage.html")

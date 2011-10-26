@@ -1,0 +1,3 @@
+#set($applications = $serviceManager.searchService($service))
+$request.getSession().setAttribute("serviceSearchResult",$applications)
+$response.sendRedirect("findService.html")

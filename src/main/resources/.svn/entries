@@ -1,0 +1,48 @@
+10
+
+dir
+4173
+svn://svn.forge.objectweb.org/svnroot/frascati/trunk/frascati/modules/frascati-web-explorer/src/main/resources
+svn://svn.forge.objectweb.org/svnroot/frascati
+
+
+
+2011-06-27T23:33:33.494785Z
+4172
+merle
+has-props
+has-prop-mods
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+49e94ffb-27ee-44a7-83f7-100ad7c3700c
+
+META-INF
+dir
+
+
+
+add
+
+frascati-web-explorer
+dir
+
+org
+dir
+
+templates
+dir
+
+
+
+add
+

@@ -1,0 +1,77 @@
+#parse("banner.html")
+#parse("header.html")
+#parse("roundedDiv.html")
+<div id="welcome-title">My services</div>
+<script type="text/javascript">
+    activateMenuTabSelected('services');
+</script>
+<script type="text/javascript">
+    function displayBlock(id){
+        if(id == 'none'){
+            document.getElementById('twitter').style.display = 'none';
+            document.getElementById('fb').style.display = 'none';
+            document.getElementById('gplus').style.display = 'none';
+        }
+        if(id == 'twitter'){
+            document.getElementById('twitter').style.display = 'block';
+            document.getElementById('fb').style.display = 'none';
+            document.getElementById('gplus').style.display = 'none';
+        }
+        if(id == 'fb'){
+            document.getElementById('twitter').style.display = 'none';
+            document.getElementById('fb').style.display = 'block';
+            document.getElementById('gplus').style.display = 'none';
+        }
+        if(id == 'gplus'){
+            document.getElementById('twitter').style.display = 'none';
+            document.getElementById('fb').style.display = 'none';
+            document.getElementById('gplus').style.display = 'block';
+        }
+    }
+</script>
+<div id="friends">
+    <script type="text/javascript">
+        displayBlock('none');
+</script>
+    <INPUT type=radio name="radio" value="twitter" onclick="displayBlock('twitter')">Twitter
+    <INPUT type=radio name="radio" value="fb" onclick="displayBlock('fb')">Facebook
+    <INPUT type=radio name="radio" value="gplus" onclick="displayBlock('gplus')">Google+
+    <div id="twitter">
+        <form METHOD="POST" ACTION="/easySoa/shareService">
+            Message : 
+            <input type="text" id="message" name="message"/>
+            Twitter login : 
+            <input type="text" id="login" name="login"/>
+            Twitter password : 
+            <input type="password" id="password" name="password"/>
+            <input type="hidden" id="network" name="network" value="twitter"/>
+            <input type="submit" class="orange button" value="Share" />
+        </form>
+    </div>
+    <div id="fb">
+        <form METHOD="POST" ACTION="/easySoa/shareService">
+            Message : 
+            <input type="text" id="message" name="message"/>
+            Facebook login : 
+            <input type="text" id="login" name="login"/>
+            Facebook password : 
+            <input type="password" id="password" name="password"/>
+            <input type="hidden" id="network" name="network" value="facebook"/>
+            <input type="submit" class="orange button" value="Share" />
+        </form>
+    </div>
+    <div id="gplus">
+        <form METHOD="POST" ACTION="/easySoa/shareService">
+            Message : 
+            <input type="text" id="message" name="message"/>
+            Google+ login : 
+            <input type="text" id="login" name="login"/>
+            Google+ password : 
+            <input type="password" id="password" name="password"/>
+            <input type="hidden" id="network" name="network" value="gplus"/>
+            <input type="submit" class="orange button" value="Share" />
+        </form>
+    </div>
+</div>
+
+#parse("footpage.html")

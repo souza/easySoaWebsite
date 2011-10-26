@@ -1,0 +1,5 @@
+#set($user = $request.getSession().getAttribute("user"))
+#set($app = $request.getSession().getAttribute("app"))
+$serviceManager.createFile($user,$app,$dir_name,$file_name);
+$request.getSession().setAttribute("fileTreeModified","true");
+$response.sendRedirect($request.getHeader("Referer"))

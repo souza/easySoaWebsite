@@ -1,0 +1,4 @@
+#if($network == "twitter")
+$socialNetwork.postOnTwitter($message,$login,$password)
+#end
+$response.sendRedirect("socialNetworks.html")

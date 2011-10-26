@@ -1,0 +1,3 @@
+#set($user = $request.getSession().getAttribute("user"))
+$serviceManager.createService($user, $name ,$description,$package,$template)
+$response.sendRedirect("myservices.html")

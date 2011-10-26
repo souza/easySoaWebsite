@@ -1,0 +1,20 @@
+#set($user = $request.getSession().getAttribute("user"))
+<div id="banner">
+    <div id="bannerElements">
+    	<div id="logo"></div>
+        <a href="homePage.html">Homepage</a>
+        <a href="messages.html">Messages</a>
+        #if($user.getFriendRequests().size()>0)
+            <a href="friendRequests.html">Friend Requests($user.getFriendRequests().size())</a>
+        #end
+        <a href="myspace.html" id="space" class="notSelected">My space</a>
+        <a href="myservices.html" id="services" class="notSelected">My services</a>
+        <a href="createService.html" id="create" class="notSelected">Create a service</a>
+        <a href="findService.html" id="find" class="notSelected">Find a service</a>
+        <a href="friends.html" id="friends" class="notSelected">My friends</a>
+    </div>
+    <div id="user">
+    $user.getUserName() 
+    $user.getSurname()
+    </div>
+</div>

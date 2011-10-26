@@ -1,0 +1,67 @@
+#parse("header.html") #parse("roundedDiv.html")
+
+<div id="connexionPanel">
+			<div id="connexion">
+				<FORM METHOD="POST" ACTION="/easySoa/connection">
+					<table>
+						<tr>
+							<td colspan="2" align="center" class="error">
+								$!request.getSession().getAttribute("messageConnection")</td>
+						</tr>
+						<tr>
+							<td><label for="login">Login : </label></td>
+							<td><input type="text" name="login" id="login" /></td>
+						</tr>
+						<tr>
+							<td><label for="password">Password : </label></td>
+							<td><input type="password" name="password" id="password" /></td>
+						</tr>
+						<tr>
+							<td colspan="2" align="center"><input type="submit"
+								class="orange button" value="Connect" /></td>
+						</tr>
+					</table>
+				</FORM>
+				<table style="width: 100%;">
+					<tr>
+						<td>First connection?</td>
+					</tr>
+					<tr>
+						<td colspan="2" align="center"><a
+							href="/easySoa/accountCreation.html" class="orange button">Create
+								account</a></td>
+					</tr>
+				</table>
+			</div>
+			<div id="connexionLink" class="font-title">Connexion</div>
+		</div>
+<div id="welcome-title">Welcome on EasySOA Services website</div>
+<div id="rounded-div-content">
+	<div class="rounded-div-padding">
+			<strong>EasySOA</strong> builds on the web and Open Source
+			technologies to make <span class="underline-text">Service
+				Oriented Architectures</span> (SOA) <span class="underline-text">simpler
+				to use.</span><br /> Its goal is to add an <strong>open</strong>, <strong>light</strong>,
+			<strong>agile</strong> layer on top of &quot; traditional &quot; SOA,
+			thanks to an online, social and collaborative approach, involving <strong>all
+				actors</strong> of the SOA process. Beyond cartography and documentation, it
+			helps gathering and fast-prototyping the business needs, and eases
+			the transition to final implementations in the existing SOA solution.<br />
+		<div id="schema-easy-soa"></div>
+		Driven by a consortium of <a class="index-link" href="easysoa-consortium.html">major actors</a> of the Open Source community,
+		EasySOA has already started <a class="index-link" href="partner-entreprises.html">throttling up</a> the SOA engine in the
+		enterprise. Why not yours ?
+	</div>
+</div>
+<script>
+	$(document).ready(function() {
+		$('#connexionLink').click(function() {
+			if ($('#connexion').is(':hidden')) {
+				$('#connexion').slideDown('slow');
+			} else {
+				$('#connexion').slideUp('slow');
+			}
+		});
+	});
+</script>
+#parse("footpage.html")

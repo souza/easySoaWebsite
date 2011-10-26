@@ -1,0 +1,28 @@
+#parse("banner.html")
+#parse("header.html")
+#parse("roundedDiv.html")
+#set($friendServices = $request.getSession().getAttribute("friendServices"))
+#set($friend = $request.getSession().getAttribute("friend"))
+<div id="welcome-title">$friend.getUserName() $friend.getSurname() services</div>
+<script type="text/javascript">
+    activateMenuTabSelected('friends');
+</script>
+<div id="rounded-div-content">
+   <table id="table">
+            #foreach($app in $friendServices)
+            #if($velocityCount%2==0)
+            <tr id="white">
+                #else
+            <tr id="otherWhite">
+                #end
+                <td>
+                    $app.getName()
+                </td>
+                <td>
+                    $app.getDescription()
+                </td>
+            </tr>
+            #end
+        </table>
+</div>
+#parse("footpage.html")

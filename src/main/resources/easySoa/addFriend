@@ -1,0 +1,4 @@
+#set($user = $request.getSession().getAttribute("user"))
+#set($targetUser = $connect.searchUser($friend))
+$friends.sendFriendRequest($user,$targetUser)
+$response.sendRedirect("friends.html")

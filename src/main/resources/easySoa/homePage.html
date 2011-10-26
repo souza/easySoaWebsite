@@ -1,0 +1,7 @@
+#parse("banner.html")
+#parse("header.html")
+#parse("roundedDiv.html")
+#set($user = $request.getSession().getAttribute("user"))
+<div id="welcome-title">Welcome $user.getLogin()</div>
+
+#parse("footpage.html")

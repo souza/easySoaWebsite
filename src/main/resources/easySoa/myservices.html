@@ -1,0 +1,42 @@
+#parse("banner.html")
+#parse("header.html")
+#parse("roundedDiv.html")
+<div id="welcome-title">My services</div>
+<script type="text/javascript">
+activateMenuTabSelected('services');
+window.localStorage.removeItem('serviceView');
+</script>
+<div id="rounded-div-content">
+    #set($userApps = $request.getSession().getAttribute("user").getProvidedApplications())
+    
+        <table id="table">
+            #foreach($app in $userApps)
+            #if($velocityCount%2==0)
+            <tr id="white">
+                #else
+            <tr id="otherWhite">
+                #end
+                <td>
+                    $app.getName()
+                </td>
+                <td>
+                    $app.getDescription()
+                </td>
+                <td>
+                    <form METHOD="POST" ACTION="/easySoa/openService">
+                    <input type="HIDDEN" name="appName" id="appName" value="$app.getName()"/>
+                    <input type="submit" class="orange button" value="Open" />
+                    </form>
+                </td>
+                <td>
+                    <form METHOD="POST" ACTION="/easySoa/deleteService">
+                    <input type="HIDDEN" name="appName" id="appName" value="$app.getName()"/>
+                    <input type="submit" class="orange button" value="Delete" />
+                    </form>
+                </td>
+            </tr>
+            #end
+        </table>
+</div>
+
+#parse("footpage.html")

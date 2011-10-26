@@ -1,0 +1,23 @@
+K 10
+svn:ignore
+V 261
+._.DS_Store
+._adam.png
+._background-cloud.png
+._cnrs.png
+._doc.jpg
+._icons-big.png
+._icons-small.png
+._kuser.png
+._lifl.png
+._menu-item-deroule.png
+._menu-item-enroule.png
+._menu-item.png
+._ql.png
+._rep-open.jpg
+._rep.jpg
+._spinner.gif
+._toolbar.png
+._ustl.png
+
+END

@@ -1,0 +1,3 @@
+#set($service = $serviceManager.getService($request.getSession().getAttribute("app"),$servicesList));
+$request.getSession().setAttribute("serviceToDisplay",$service)
+$response.sendRedirect($request.getHeader("Referer"))

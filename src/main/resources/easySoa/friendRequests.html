@@ -1,0 +1,24 @@
+#parse("banner.html")
+#parse("header.html")
+#parse("roundedDiv.html")
+<div id="welcome-title">Friend Requests</div>
+$!request.getSession().getAttribute("messageFriendRequest")
+$request.getSession().removeAttribute("messageFriendRequest")
+#foreach($friendRequest in $user.getFriendRequests())
+<div id="friendsView">
+        Name : $friendRequest.getOriginUser().getUserName()  <br/>
+        Surname : $friendRequest.getOriginUser().getSurname() <br/>
+        Birthday : $friendRequest.getOriginUser().getBirthday()<br/>
+        Town : $friendRequest.getOriginUser().getTown()<br/>
+        Country : $friendRequest.getOriginUser().getCountry()<br/>
+        <form METHOD="POST" ACTION="/easySoa/acceptFriend">
+            <input type="hidden" id="friend" name="friend" value="$friendRequest.getId()" />
+            <input type="submit" class="orange button" value="Accept" />
+        </form>
+        <form METHOD="POST" ACTION="/easySoa/refuseFriend">
+            <input type="hidden" id="friend" name="friend" value="$friendRequest.getId()" />
+            <input type="submit" class="orange button" value="Refuse" />
+        </form>
+    </div>
+#end
+#parse("footpage.html")

@@ -1,0 +1,160 @@
+#logo {
+	background: transparent url("../images/Logo.png") no-repeat center top;
+	width: 144px;
+	height: 36px;
+	float: left;
+}
+
+.logo-open-wide{
+	background: transparent url("../images/logo-openwide.png") no-repeat right center;
+	width: 210px;
+	height: 66px;
+	float: right;
+}
+
+.logo-bull{
+	background: transparent url("../images/logo-bull.png") no-repeat right center;
+	width: 111px;
+	height: 50px;
+	float: right;
+}
+
+.logo-easifab{
+	background: transparent url("../images/logo-easifab.png") no-repeat right center;
+	width: 158px;
+	height: 50px;
+	float: right;
+}
+
+.logo-inria{
+	background: transparent url("../images/logo-inria.png") no-repeat right center;
+	width: 137px;
+	height: 50px;
+	float: right;
+}
+
+.logo-nuxeo{
+	background: transparent url("../images/logo-nuxeo.png") no-repeat right center;
+	width: 142px;
+	height: 50px;
+	float: right;
+}
+
+.logo-talend{
+	background: transparent url("../images/logo-talend.png") no-repeat right center;
+	width: 133px;
+	height: 50px;
+	float: right;
+}
+
+.component-image{
+	background:url(../images/sca/Component.gif) no-repeat center center;
+    width: 21px;
+    height: 21px;
+    float: left;
+}
+
+.component-reference-image{
+	background:url(../images/sca/ComponentReference.gif) no-repeat center center;
+    width: 21px;
+    height: 21px;
+    float: left;
+}
+
+.component-service-image{
+	background:url(../images/sca/ComponenServicet.gif) no-repeat center center;
+    width: 21px;
+    height: 21px;
+    float: left;
+}
+
+.composite-image{
+	background:url(../images/sca/Composite.gif) no-repeat center center;
+    width: 21px;
+    height: 21px;
+    float: left;
+}
+
+.http-binding-image{
+	background:url(../images/sca/HTTPBinding.gif) no-repeat center center;
+    width: 21px;
+    height: 21px;
+    float: left;
+}
+
+.implementation-image{
+	background:url(../images/sca/Implementation.gif) no-repeat center center;
+    width: 21px;
+    height: 21px;
+    float: left;
+}
+
+.java-implementation-image{
+	background:url(../images/sca/JavaImplementation.gif) no-repeat center center;
+    width: 21px;
+    height: 21px;
+    float: left;
+}
+
+.java-interface-image{
+	background:url(../images/sca/JavaInterface.gif) no-repeat center center;
+    width: 21px;
+    height: 21px;
+    float: left;
+}
+
+.promote-image{
+	background:url(../images/sca/Promote.gif) no-repeat center center;
+    width: 21px;
+    height: 21px;
+    float: left;
+}
+
+.property-image{
+	background:url(../images/sca/Property.gif) no-repeat center center;
+    width: 21px;
+    height: 21px;
+    float: left;
+}
+
+.reference-image{
+	background:url(../images/sca/Reference.gif) no-repeat center center;
+    width: 21px;
+    height: 21px;
+    float: left;
+}
+
+.rest-binding-image{
+	background:url(../images/sca/RestBinding.gif) no-repeat center center;
+    width: 21px;
+    height: 21px;
+    float: left;
+}
+
+.service-image{
+	background:url(../images/sca/Service.gif) no-repeat center center;
+    width: 21px;
+    height: 21px;
+    float: left;
+}
+
+.velocity-implementation-image{
+	background:url(../images/sca/Implementation.gif) no-repeat center center;
+    width: 21px;
+    height: 21px;
+    float: left;
+}
+
+.web-service-binding-image{
+	background:url(../images/sca/WebServiceBinding.gif) no-repeat center center;
+    width: 21px;
+    height: 21px;
+    float: left;
+}
+
+.wire-image{
+	background:url(../images/sca/Wire.gif) no-repeat center center;
+    width: 21px;
+    height: 21px;
+    float: left;
+}

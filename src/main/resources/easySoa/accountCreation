@@ -1,0 +1,4 @@
+#set($user = $connection.createAccount($login, $password, $confirmPassword, $mail, $name, $surname, $civility, $town, $country, $birthday))
+#set($session = $request.getSession(true))
+$session.setAttribute("user",$user)
+$response.sendRedirect("index.html")

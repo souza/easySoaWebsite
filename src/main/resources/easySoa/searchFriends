@@ -1,0 +1,4 @@
+#set($friendsSearch = $friends.searchFriends($firstname, $lastname, $town))
+#set($session = $request.getSession())
+$session.setAttribute("friends",$friendsSearch)
+$response.sendRedirect("friendsSearch.html")

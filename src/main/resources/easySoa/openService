@@ -1,0 +1,4 @@
+#set($user = $request.getSession().getAttribute("user"))
+#set($application = $serviceManager.searchService($appName,$user))
+$request.getSession().setAttribute("app",$application)
+$response.sendRedirect("service.html")

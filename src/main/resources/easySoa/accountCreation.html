@@ -1,0 +1,92 @@
+#parse("header.html")
+#parse("roundedDiv.html")
+#set($countries = $utils.getCountries())
+<div id="welcome-title">Create account</div>
+
+<div id="account">
+    <form METHOD="POST" ACTION="/easySoa/accountCreation">
+        <div class="center">
+            <input type=RADIO name="civility" value="Mr" checked>Mr <input
+                type=RADIO name="civility" value="Mrs">Mrs <input type=RADIO
+                name="civility" value="Miss">Miss
+        </div>
+        <table style="margin-left:auto;margin-right:auto;">
+            <tr>
+                <td>Firstname :
+                </td>
+                <td><input type="text" name="name" id="name" />
+                </td>
+            </tr>
+            <tr>
+                <td>Surname :
+                </td>
+                <td><input type="text" name="surname" id="surname" />
+                </td>
+            </tr>
+            <tr>
+                <td>Birthday (ex:03/14/1987):
+                </td>
+                <td><input type="text" name="birthday" id="birthday" />
+                </td>
+            </tr>
+            <tr>
+                <td>Login :
+                </td>
+                <td><input type="text" name="login" id="login" />
+                </td>
+            </tr>
+            <tr>
+                <td>Password :
+                </td>
+                <td><input type="password" name="password" id="password" />
+                </td>
+            </tr>
+            <tr>
+                <td>Password confirm :
+                </td>
+                <td><input type="password" name="confirmPassword"
+                           id="confirmPassword" />
+                </td>
+            </tr>
+            <tr>
+                <td>Mail :
+                </td>
+                <td><input type="text" name="mail" id="mail" />
+                </td>
+            </tr>
+            <tr>
+                <td>Country:
+                </td>
+                <td>
+                    <SELECT name="country" id="country" size="1">
+                        #foreach($country in $countries)
+                        <OPTION>$country</OPTION>
+                        #end
+                    </SELECT>
+                </td>
+            </tr>
+            <tr>
+                <td>Town :
+                </td>
+                <td>
+                    <input type="text" id="town" name="town"/>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center"><input type="submit" class="orange button" value="Create account" />
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+<script>
+$("#birthday").datepicker();
+</script>
+<script>
+$("#town").autocomplete({
+    source: "/easySoa/townSuggestions",
+    minLength: 3
+});
+</script>
+
+#parse("footpage.html")

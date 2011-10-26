@@ -1,0 +1,28 @@
+#parse("header.html")
+
+#set( $portInterface = $invoker.getPortInterface($componentPath,$portName) )
+
+<ul>
+<li>Component: #linkToComponent ( $componentPath $componentPath )</li>
+<li>Port name: $portName</li>
+<li>Port interface: $portInterface.Name</li>
+</ul>
+
+#foreach( $method in $portInterface.Methods )
+<form action="invoke" method="post">
+  <input type="hidden" name="componentPath" value="$componentPath"/>
+  <input type="hidden" name="portName" value="$portName"/>
+  <input type="hidden" name="methodName" value="$method.Name"/>
+  <input type="submit" value="Invoke $method.Name"/>
+#foreach( $p in $method.ParameterTypes )
+  Parameter $foreach.count - $p.Name : <input type="text" name="${method.Name}.$foreach.count"/>
+#end
+</form>
+#end
+
+<p>
+Back to
+#linkToComponent ( $componentPath $componentPath )
+Page.</p>
+
+#parse("footpage.html")

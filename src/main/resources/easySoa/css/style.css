@@ -1,0 +1,16 @@
+.underline-text {text-decoration: underline;}
+.notSelected {color: #666666;}
+.selected {color: #335577;}
+.grey-back {background: -moz-linear-gradient(#959595, #ffffff);}
+.grey {background-color: #959595;}
+.light-grey {background-color: #B2B2B2;}
+.blue {background-color: #00D3E7;}
+.green {background-color: #0CC900;}
+.grey-text {color: #959595;}
+.blue-text {color: #0097A7;}
+.green-text {color: #0CA600;}
+.error {color: red;}
+.success {color: #0B7000;}
+#white {background-color: #FFFFFF;}
+#otherWhite {background-color: #7F9DB9;}
+.center {text-align: center;}

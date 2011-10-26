@@ -1,0 +1,10 @@
+Component : $componentPath
+Port name : $portName
+Method name : $methodName
+
+Parameters:
+#foreach($p in $request.ParameterNames)
+  $p = $request.getParameter($p)
+#end
+
+$invoker.invoke($componentPath, $portName, $methodName, $request.ParameterMap)

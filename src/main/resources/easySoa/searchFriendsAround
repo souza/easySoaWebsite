@@ -1,0 +1,4 @@
+#set($user = $request.getSession().getAttribute("user"))
+#set($friendsSearch = $friends.getFriendsAroundMe($user,$kms))
+$request.getSession().setAttribute("friends",$friendsSearch)
+$response.sendRedirect("friendsSearch.html")

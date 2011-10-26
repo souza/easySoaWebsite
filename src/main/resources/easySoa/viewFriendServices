@@ -1,0 +1,3 @@
+#set($friendServices = $serviceManager.getServices($friendId))
+$request.getSession().setAttribute("friendServices",$friendServices)
+$response.sendRedirect("friendServices.html")

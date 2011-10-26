@@ -1,0 +1,1 @@
+$serviceManager.transformCompositeToJSon($request.getSession().getAttribute("app"))
