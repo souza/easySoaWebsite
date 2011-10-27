@@ -50,7 +50,8 @@ public class HttpBindingProcessor implements ComplexProcessorItf {
     			sb.append("Uri : ");
     			sb.append("</td>");
     			sb.append("<td>");
-    			sb.append("<input type=\"text\" id=\"uri\" name=\"uri\" value=\""+binding.getUri()+"\"/><br/>");
+    			if(binding.getUri()!=null)sb.append("<input type=\"text\" id=\"uri\" name=\"uri\" value=\""+binding.getUri()+"\"/><br/>");
+    			else sb.append("<input type=\"text\" id=\"uri\" name=\"uri\" value=\"\"/><br/>");
     			sb.append("</td>");
     			sb.append("<td>");
     			sb.append("<select name=\"binding-type\" id=\"binding-type\" size=\"1\">");

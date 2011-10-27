@@ -58,7 +58,8 @@ public class ComponentServiceProcessor implements ComplexProcessorItf {
 	    			sb.append("Name : ");
 	    			sb.append("</td>");
 	    			sb.append("<td colspan=\"2\">");
-	    			sb.append("<input type=\"text\" id=\"name\" name=\"name\" value=\""+service.getName()+"\"/><br/>");
+	    			if(service.getName()!=null)sb.append("<input type=\"text\" id=\"name\" name=\"name\" value=\""+service.getName()+"\"/><br/>");
+	    			else sb.append("<input type=\"text\" id=\"name\" name=\"name\" value=\"\"/><br/>");
 	    			sb.append("</td>");
 	    			sb.append("</tr>");
 	    			if(service.getInterface()!=null){

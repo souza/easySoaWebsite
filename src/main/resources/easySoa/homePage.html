@@ -3,5 +3,17 @@
 #parse("roundedDiv.html")
 #set($user = $request.getSession().getAttribute("user"))
 <div id="welcome-title">Welcome $user.getLogin()</div>
-
+<div id="rounded-div-content">
+	<div id="homePage">
+    <p>You are in your personal space. Here you can :</p>
+    <ul>
+    	<li>see your messages sent by other users</li>
+    	<li>modify your informations</li>
+    	<li>see and modify your existing applications</li>
+    	<li>create an application and deploy on Cloud</li>
+    	<li>find an existing applications created by an user and copy or use them</li>
+    	<li>find friends and see friend's projects</li>
+    </ul>
+    </div>
+</div>
 #parse("footpage.html")

@@ -48,7 +48,8 @@ public class JavaImplementationProcessor implements ComplexProcessorItf {
     	sb.append("Implementation : ");
     	sb.append("</td>");
     	sb.append("<td>");
-    	sb.append("<input type=\"text\" id=\"implementation\" name=\"implementation\" size=\"40\" value=\""+javaImplementation.getClass_()+"\"/>");
+    	if(javaImplementation.getClass_()!=null)sb.append("<input type=\"text\" id=\"implementation\" name=\"implementation\" size=\"40\" value=\""+javaImplementation.getClass_()+"\"/>");
+    	else sb.append("<input type=\"text\" id=\"implementation\" name=\"implementation\" size=\"40\" value=\"\"/>");
     	sb.append("</td>");
     	sb.append("<td>");
     	sb.append("<select name=\"implementation-type\" id=\"implementation-type\" size=\"1\">");

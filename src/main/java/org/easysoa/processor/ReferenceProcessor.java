@@ -61,7 +61,8 @@ public class ReferenceProcessor implements ComplexProcessorItf {
 	    			sb.append("Name : ");
 	    			sb.append("</td>");
 	    			sb.append("<td colspan=\"2\">");
-	    			sb.append("<input type=\"text\" id=\"name\" name=\"name\" value=\""+reference.getName()+"\"/><br/>");
+	    			if(reference.getName()!=null)sb.append("<input type=\"text\" id=\"name\" name=\"name\" value=\""+reference.getName()+"\"/><br/>");
+	    			else sb.append("<input type=\"text\" id=\"name\" name=\"name\" value=\"\"/><br/>");
 	    			sb.append("</td>");
 	    			sb.append("</tr>");
 	    			if(reference.getInterface()!=null){
@@ -95,7 +96,8 @@ public class ReferenceProcessor implements ComplexProcessorItf {
 	    			sb.append("Target : ");
 	    			sb.append("</td>");
 	    			sb.append("<td colspan=\"2\">");
-	    			sb.append("<input type=\"text\" id=\"target\" name=\"target\" size=\"40\" value=\""+reference.getTarget()+"\"/><br/>");
+	    			if(reference.getTarget()!=null)sb.append("<input type=\"text\" id=\"target\" name=\"target\" size=\"40\" value=\""+reference.getTarget()+"\"/><br/>");
+	    			else sb.append("<input type=\"text\" id=\"target\" name=\"target\" size=\"40\" value=\"\"/><br/>");
 	    			sb.append("</td>");
 	    			sb.append("</tr>");
 	    			sb.append("<tr>");
@@ -104,7 +106,8 @@ public class ReferenceProcessor implements ComplexProcessorItf {
 	    			sb.append("Promote : ");
 	    			sb.append("</td>");
 	    			sb.append("<td colspan=\"2\">");
-	    			sb.append("<input type=\"text\" id=\"promote\" name=\"promote\" size=\"40\" value=\""+reference.getPromote()+"\"/><br/>");
+	    			if(reference.getPromote()!=null)sb.append("<input type=\"text\" id=\"promote\" name=\"promote\" size=\"40\" value=\""+reference.getPromote()+"\"/><br/>");
+	    			else sb.append("<input type=\"text\" id=\"promote\" name=\"promote\" size=\"40\" value=\"\"/><br/>");
 	    			sb.append("</td>");
 	    			sb.append("</tr>");
 	    			sb.append("</table>");

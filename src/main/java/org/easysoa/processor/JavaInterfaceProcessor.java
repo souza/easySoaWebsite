@@ -48,7 +48,8 @@ public class JavaInterfaceProcessor implements ComplexProcessorItf {
     	sb.append("Interface : ");
     	sb.append("</td>");
     	sb.append("<td>");
-    	sb.append("<input type=\"text\" id=\"interface\" name=\"interface\" size=\"40\" value=\""+javaInterface.getInterface()+"\"/>");
+    	if(javaInterface.getInterface()!=null)sb.append("<input type=\"text\" id=\"interface\" name=\"interface\" size=\"40\" value=\""+javaInterface.getInterface()+"\"/>");
+    	else sb.append("<input type=\"text\" id=\"interface\" name=\"interface\" size=\"40\" value=\"\"/>");
     	sb.append("</td>");
     	sb.append("<td>");
     	sb.append("<select name=\"interface-type\" id=\"interface-type\" size=\"1\">");

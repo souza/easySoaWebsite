@@ -41,6 +41,7 @@ name="EasySOA">
         <reference name="serviceManager" target="ServiceManager/serviceManager"/>
         <reference name="socialNetwork" target="SocialNetwork/socialNetwork"/>
         <reference name="utils" target="Utils/utils"/>
+        <reference name="compositeTemplates" target="TemplateProcessor/processor"/>
     </component>
 
     <!--<component name="ComponentTemplate">
@@ -297,6 +298,14 @@ name="EasySOA">
         </service>
     </component>
     <wire source="TemplateProcessor/templates" target="EmptyTemplateProcessor/template"/>
+    
+    <component name="ProxyTemplateProcessor">
+        <implementation.java class="org.easysoa.compositeTemplates.ProxyFactoryCompositeProcessor" />
+        <service name="template">
+            <interface.java interface="org.easysoa.compositeTemplates.CompositeTemplateItf" />
+        </service>
+    </component>
+    <wire source="TemplateProcessor/templates" target="ProxyTemplateProcessor/template"/>
     
     <component name="ImplementationsProcessor">
         <implementation.java class="org.easysoa.processor.ImplementationsProcessor"/>

@@ -61,7 +61,8 @@ public class ServiceProcessor implements ComplexProcessorItf{
 	    			sb.append("Name : ");
 	    			sb.append("</td>");
 	    			sb.append("<td colspan=\"2\">");
-	    			sb.append("<input type=\"text\" id=\"name\" name=\"name\" value=\""+service.getName()+"\"/><br/>");
+	    			if(service.getName()!=null)sb.append("<input type=\"text\" id=\"name\" name=\"name\" value=\""+service.getName()+"\"/><br/>");
+	    			else sb.append("<input type=\"text\" id=\"name\" name=\"name\" value=\"\"/><br/>");
 	    			sb.append("</td>");
 	    			sb.append("</tr>");
 	    			if(service.getInterface()!=null){
@@ -96,7 +97,8 @@ public class ServiceProcessor implements ComplexProcessorItf{
 	    			sb.append("Promote : ");
 	    			sb.append("</td>");
 	    			sb.append("<td colspan=\"2\">");
-	    			sb.append("<input type=\"text\" id=\"promote\" name=\"promote\" size=\"40\" value=\""+service.getPromote()+"\"/><br/>");
+	    			if(service.getPromote()!=null)sb.append("<input type=\"text\" id=\"promote\" name=\"promote\" size=\"40\" value=\""+service.getPromote()+"\"/><br/>");
+	    			else sb.append("<input type=\"text\" id=\"promote\" name=\"promote\" size=\"40\" value=\"\"/><br/>");
 	    			sb.append("</td>");
 	    			sb.append("</tr>");
 	    			sb.append("</table>");

@@ -1,6 +1,7 @@
 #parse("banner.html")
 #parse("header.html")
 #parse("roundedDiv.html")
+#set($templates = $compositeTemplates.allAvailableTemplatesLabel())
 <div id="welcome-title">Create Application</div>
 
 <script type="text/javascript">
@@ -38,7 +39,11 @@
                     Template name :
                 </td>
                 <td>
-                    <input type="text" name="template" id="template" />
+                    <select name="template" id="template" >
+                    	#foreach($template in $templates)
+                    		<option>$template</option>
+                    	#end
+                    </select>
                 </td>
             </tr>
             <tr>

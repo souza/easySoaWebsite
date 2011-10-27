@@ -73,8 +73,8 @@ public class CompositeProcessor implements ComplexProcessorItf {
 		sb.append("Name : ");
 		sb.append("</td>");
 		sb.append("<td>");
-		sb.append("<input type=\"text\" id=\"name\" name=\"name\" value=\""
-				+ composite.getName() + "\"/><br/>");
+		if(composite.getName()!=null)sb.append("<input type=\"text\" id=\"name\" name=\"name\" value=\""+ composite.getName()+ "\"/>");
+		else sb.append("<input type=\"text\" id=\"name\" name=\"name\" value=\"\"/>");
 		sb.append("</td>");
 		sb.append("</tr>");
 		sb.append("</table>");

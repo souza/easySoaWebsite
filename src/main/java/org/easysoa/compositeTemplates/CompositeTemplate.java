@@ -1,5 +1,6 @@
 package org.easysoa.compositeTemplates;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,5 +35,19 @@ public class CompositeTemplate implements CompositeTemplateItf {
 	@Override
 	public Composite createComposite(String templateName) {
 		return this.templateMap.get(templateName).createComposite(templateName);
+	}
+
+	@Override
+	public List<String> allAvailableTemplatesLabel() {
+		List<String> labels = new ArrayList<String>();
+		for(CompositeTemplateItf template : this.templates){
+			labels.add(template.getLabel());
+		}
+		return labels;
+	}
+
+	@Override
+	public String getLabel() {
+		return null;
 	}
 }

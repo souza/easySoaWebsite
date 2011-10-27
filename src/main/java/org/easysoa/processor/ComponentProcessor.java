@@ -75,8 +75,8 @@ public class ComponentProcessor implements ComplexProcessorItf {
 		sb.append("Name : ");
 		sb.append("</td>");
 		sb.append("<td colspan=\"2\">");
-		sb.append("<input type=\"text\" id=\"name\" name=\"name\" value=\""
-				+ component.getName() + "\"/><br/>");
+		if(component.getName()!=null)sb.append("<input type=\"text\" id=\"name\" name=\"name\" value=\""+ component.getName() + "\"/><br/>");
+		else sb.append("<input type=\"text\" id=\"name\" name=\"name\" value=\"\"/><br/>");
 		sb.append("</td>");
 		sb.append("</tr>");
 		if (component.getImplementation() != null) {

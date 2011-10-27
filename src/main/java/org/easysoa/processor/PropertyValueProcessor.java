@@ -47,14 +47,16 @@ public class PropertyValueProcessor implements ComplexProcessorItf{
     			sb.append("Name : ");
     			sb.append("</td>");
     			sb.append("<td>");
-    			sb.append("<input type=\"text\" id=\"name\" name=\"name\" value=\""+property.getName()+"\"/><br/>");
+    			if(property.getName()!=null)sb.append("<input type=\"text\" id=\"name\" name=\"name\" value=\""+property.getName()+"\"/><br/>");
+    			else sb.append("<input type=\"text\" id=\"name\" name=\"name\" value=\"\"/><br/>");
     			sb.append("</tr>");
     			sb.append("<tr>");
     			sb.append("<td>");
     			sb.append("Type : ");
     			sb.append("</td>");
     			sb.append("<td>");
-    			sb.append("<input type=\"text\" id=\"type\" name=\"type\" value=\""+property.getType()+"\"/><br/>");
+    			if(property.getType()!=null)sb.append("<input type=\"text\" id=\"type\" name=\"type\" value=\""+property.getType()+"\"/><br/>");
+    			else sb.append("<input type=\"text\" id=\"type\" name=\"type\" value=\"\"/><br/>");
     			sb.append("</td>");
     			sb.append("</tr>");
     			sb.append("<tr>");
@@ -62,7 +64,8 @@ public class PropertyValueProcessor implements ComplexProcessorItf{
     			sb.append("Value : ");
     			sb.append("</td>");
     			sb.append("<td>");
-    			sb.append("<input type=\"text\" id=\"value\" name=\"value\" value=\""+property.getValue()+"\"/><br/>");
+    			if(property.getValue()!=null)sb.append("<input type=\"text\" id=\"value\" name=\"value\" value=\""+property.getValue()+"\"/><br/>");
+    			else sb.append("<input type=\"text\" id=\"value\" name=\"value\" value=\"\"/><br/>");
     			sb.append("</td>");
     			sb.append("</tr>");
     			sb.append("</table>");

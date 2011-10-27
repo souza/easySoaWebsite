@@ -43,7 +43,9 @@ public class VelocityImplementationProcessor implements ComplexProcessorItf {
     	sb.append("Implementation : ");
     	sb.append("</td>");
     	sb.append("<td>");
-    	sb.append("<input type=\"text\" id=\"implementation\" name=\"implementation\" size=\"40\" value=\""+velocityImplementation.getLocation()+"/"+velocityImplementation.getLocation()+"\"/>");
+    	String implementation = velocityImplementation.getLocation()+"/"+velocityImplementation.getDefault();
+    	if(!implementation.equals("/"))sb.append("<input type=\"text\" id=\"implementation\" name=\"implementation\" size=\"40\" value=\""+implementation+"\"/>");
+    	else sb.append("<input type=\"text\" id=\"implementation\" name=\"implementation\" size=\"40\" value=\"\"/>");
     	sb.append("</td>");
     	sb.append("<td>");
     	sb.append("<select name=\"implementation-type\" id=\"implementation-type\" size=\"1\">");
