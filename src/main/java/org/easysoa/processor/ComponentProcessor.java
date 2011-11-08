@@ -105,7 +105,7 @@ public class ComponentProcessor implements ComplexProcessorItf {
 	    	sb.append("<input type=\"text\" id=\"implementation\" name=\"implementation\" size=\"40\" value=\"\"/>");
 	    	sb.append("</td>");
 	    	sb.append("<td>");
-	    	sb.append("<select name=\"implementation-type\" id=\"implementation-type\" size=\"1\">");
+	    	sb.append("<select name=\"implementation-type\" id=\"implementation-type\" size=\"1\" onChange=\"changeImplementation()\">");
 	    	for(String label : this.implementationProcessor.allAvailableImplementationsLabel()){
 	    		if(label.equals(this.getLabel(null))){
 	    			sb.append("<option selected=\"selected\">"+label+"</option>");

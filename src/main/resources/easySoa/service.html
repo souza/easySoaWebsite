@@ -33,7 +33,6 @@
 				globalId = selectId+globalId;
 				selectId = tree.getParentId(selectId);
 			}
-			alert(globalId);
 			var name = $("input[name=name]").val();
 			$.post("/rest/saveElement", $(this).serialize()+"&id="+globalId,function(data){
 				tree.setItemText(id,name,null);

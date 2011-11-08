@@ -139,7 +139,7 @@ public class ImplementationsProcessor implements ImplementationsProcessorItf {
 
 			// TODO: Copy or transform other properties.
 
-			return oasisVelocityImplementation;
+			return osoaJavaImplementation;
 		}
 
 		// TODO: BPEL implementation.

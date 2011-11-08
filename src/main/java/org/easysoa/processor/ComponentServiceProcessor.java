@@ -80,7 +80,7 @@ public class ComponentServiceProcessor implements ComplexProcessorItf {
 	    		    	sb.append("<input type=\"text\" id=\"interface\" name=\"interface\" size=\"40\" value=\"\"/>");
 	    		    	sb.append("</td>");
 	    		    	sb.append("<td>");
-	    		    	sb.append("<select name=\"interface-type\" id=\"interface-type\" size=\"1\">");
+	    		    	sb.append("<select name=\"interface-type\" id=\"interface-type\" size=\"1\" onChange=\"changeInterface()\">");
 	    		    	for(String label : this.interfaceProcessor.allAvailableInterfacesLabel()){
 	    		    		if(label.equals(this.getLabel(null))){
 	    		    			sb.append("<option selected=\"selected\">"+label+"</option>");
