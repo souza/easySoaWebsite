@@ -68,7 +68,6 @@ function onTreeClick() {
 		globalId = selectId+globalId;
 		selectId = tree.getParentId(selectId);
 	}
-	alert(globalId);
 	AJAX.onreadystatechange = getComponentContent;
 	AJAX.open("GET", "/rest/componentContent?id=" + globalId);
 	AJAX.send("");

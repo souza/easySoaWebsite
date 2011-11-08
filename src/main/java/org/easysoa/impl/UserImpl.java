@@ -56,7 +56,7 @@ public class UserImpl implements Users {
             User user = new User(login, name, surname, password, mail, civilityValue, town, country, birthday);
             em.persist(user);
             em.getTransaction().commit();
-            utils.sendMailAccountCreation(user);
+            //utils.sendMailAccountCreation(user);
             this.createWorkspace(user);
             em.getTransaction().begin();
             User userx = em.find(User.class, user.getId());
@@ -84,7 +84,12 @@ public class UserImpl implements Users {
 
 
     private void createWorkspace(User user) {
+    	try{
         String path = WORKSPACE_PATH;
+        File space = new File(path);
+        if(!space.exists()){
+        	space.mkdirs();
+        }
         File f = new File(path + File.separator + user.getLogin());
         f.mkdirs();
         EntityManager em = db.get();
@@ -92,6 +97,10 @@ public class UserImpl implements Users {
         User userx = em.find(User.class, user.getId());
         userx.setWorkspaceUrl(f.getPath());
         em.getTransaction().commit();
+    	}
+    	catch(Exception e){
+    		e.printStackTrace();
+    	}
     }
 
     @Override
