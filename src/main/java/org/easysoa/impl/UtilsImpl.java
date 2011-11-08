@@ -18,6 +18,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import org.easysoa.api.Utils;
+import org.easysoa.jpa.Provider;
 import org.easysoa.model.User;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -30,7 +31,6 @@ import org.eclipse.stp.sca.DocumentRoot;
 import org.eclipse.stp.sca.ScaFactory;
 import org.eclipse.stp.sca.util.ScaResourceFactoryImpl;
 import org.osoa.sca.annotations.Reference;
-import org.ow2.frascati.jpa.Provider;
 
 /**
  * 

@@ -19,6 +19,7 @@ import org.easysoa.api.ServiceManager;
 import org.easysoa.api.Users;
 import org.easysoa.api.Utils;
 import org.easysoa.compositeTemplates.CompositeTemplateProcessorItf;
+import org.easysoa.jpa.Provider;
 import org.easysoa.model.Application;
 import org.easysoa.model.User;
 import org.eclipse.stp.sca.Composite;
@@ -29,7 +30,6 @@ import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 import org.osoa.sca.annotations.Reference;
 import org.osoa.sca.annotations.Scope;
-import org.ow2.frascati.jpa.Provider;
 import org.ow2.frascati.parser.api.Parser;
 import org.ow2.frascati.parser.core.ParsingContextImpl;
 

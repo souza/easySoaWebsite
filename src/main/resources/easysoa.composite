@@ -113,9 +113,9 @@
 	</component>
 
 	<component name="EASY-SOA-DB">
-		<implementation.java class="org.ow2.frascati.jpa.EntityManagerProviderImpl" />
+		<implementation.java class="org.easysoa.jpa.EntityManagerProviderImpl" />
 		<service name="db">
-			<interface.java interface="org.ow2.frascati.jpa.Provider" />
+			<interface.java interface="org.easysoa.jpa.Provider" />
 		</service>
 		<property name="persistenceUnitName">jpa-easysoa</property>
 	</component>

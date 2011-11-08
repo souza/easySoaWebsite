@@ -12,11 +12,11 @@ import javax.persistence.Query;
 
 import org.easysoa.api.Friends;
 import org.easysoa.api.Utils;
+import org.easysoa.jpa.Provider;
 import org.easysoa.model.FriendRequest;
 import org.easysoa.model.Point;
 import org.easysoa.model.User;
 import org.osoa.sca.annotations.Reference;
-import org.ow2.frascati.jpa.Provider;
 
 /**
  *

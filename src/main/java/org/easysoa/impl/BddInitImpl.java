@@ -10,9 +10,9 @@ import java.io.FileReader;
 
 import javax.persistence.EntityManager;
 
+import org.easysoa.jpa.Provider;
 import org.easysoa.model.Town;
 import org.osoa.sca.annotations.Reference;
-import org.ow2.frascati.jpa.Provider;
 
 /**
  *
