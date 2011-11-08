@@ -94,17 +94,14 @@ public class UserImpl implements Users {
 
     @Override
     public User searchUser(Long id) {
-    	System.out.println("ID : "+id);
         EntityManager em = db.get();
         em.getTransaction().begin();
         User user = em.find(User.class, id);
-        System.out.println("user id : "+user.getId());
         return user;
     }
     
     @Override
     public User searchUser(String idString) {
-    	System.out.println("searchUser : "+idString);
         Long id = Long.parseLong(idString);
         return this.searchUser(id);
     }

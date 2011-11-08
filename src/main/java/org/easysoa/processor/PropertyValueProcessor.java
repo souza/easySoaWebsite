@@ -1,7 +1,12 @@
 package org.easysoa.processor;
 
+import java.util.Map;
+
+import javax.xml.namespace.QName;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.stp.sca.PropertyValue;
+import org.eclipse.stp.sca.ScaFactory;
 import org.eclipse.stp.sca.ScaPackage;
 import org.json.simple.JSONObject;
 
@@ -26,7 +31,7 @@ public class PropertyValueProcessor implements ComplexProcessorItf{
     public JSONObject getMenuItem(EObject eObject, String parentId) {
     	PropertyValue property = (PropertyValue)eObject;
     	 JSONObject propertyObject = new JSONObject();
-         propertyObject.put("id", parentId+"+property+"+property.getName());
+         propertyObject.put("id", "+property+"+property.getName());
          propertyObject.put("text", property.getName());
          propertyObject.put("im0", "Property.gif");
          propertyObject.put("im1", "Property.gif");
@@ -39,7 +44,6 @@ public class PropertyValueProcessor implements ComplexProcessorItf{
         PropertyValue property = (PropertyValue)eObject;
         StringBuffer sb = new StringBuffer();
     	sb.append("<div class=\"component_frame_line\">");
-    		sb.append("<form>");
     		sb.append("<table>");
     		sb.append("<tr>");
     		sb.append("<td>");
@@ -69,7 +73,6 @@ public class PropertyValueProcessor implements ComplexProcessorItf{
     			sb.append("</td>");
     			sb.append("</tr>");
     			sb.append("</table>");
-    		sb.append("</form>");
     	sb.append("</div>");
     	return sb.toString();
     }
@@ -79,6 +82,20 @@ public class PropertyValueProcessor implements ComplexProcessorItf{
 		StringBuffer sb = new StringBuffer();
 		sb.append("<a onclick=\"action('deleteComponentProperty')\">Delete</a>");
 		return sb.toString();
+	}
+
+	@Override
+	public EObject saveElement(EObject eObject, Map<String, Object> params) {
+		PropertyValue property = (PropertyValue)eObject;
+		property.setName((String)params.get("name"));
+		property.setType(new QName((String)params.get("type")));
+		property.setValue((String)params.get("value"));
+		return property;
+	}
+
+	@Override
+	public EObject getNewEObject(EObject eObject) {
+		return ScaFactory.eINSTANCE.createPropertyValue();
 	}
 	
 }

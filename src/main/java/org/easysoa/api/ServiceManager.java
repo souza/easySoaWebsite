@@ -1,6 +1,7 @@
 package org.easysoa.api;
 
 import java.util.List;
+import java.util.Map;
 
 import org.easysoa.model.Application;
 import org.easysoa.model.User;
@@ -14,7 +15,7 @@ import org.osoa.sca.annotations.Service;
 @Service
 public interface ServiceManager {
 
-    void createService(User user,String name, String descrption, String packageName, String templateName);
+    void createService(User user,String name, String descrption, String packageName, String templateName, Map<String, Object> params);
 
     Composite searchService(String name, User user);
 
@@ -26,6 +27,8 @@ public interface ServiceManager {
     
     List<Application> searchService(String keywords);
     
+    void reloadComposite();
+    
     List<Application> getServices(String friendId);
     
     Application setDescription(Application application, String description);
@@ -36,6 +39,8 @@ public interface ServiceManager {
     
     Composite getComposite();
     
-    Application getCurrentApplication();
+    void setComposite(Composite composite);
     
+    Application getCurrentApplication();
+
 }

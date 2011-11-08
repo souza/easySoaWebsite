@@ -1,7 +1,11 @@
 package org.easysoa.processor;
 
+import java.util.Map;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.stp.sca.Binding;
+import org.eclipse.stp.sca.Interface;
+import org.eclipse.stp.sca.ScaFactory;
 import org.eclipse.stp.sca.ScaPackage;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -29,7 +33,7 @@ public class ReferenceProcessor implements ComplexProcessorItf {
 	public JSONObject getMenuItem(EObject eObject, String parentId) {
 		org.eclipse.stp.sca.Reference reference  = (org.eclipse.stp.sca.Reference)eObject;
 		JSONObject referenceObject = new JSONObject();
-        referenceObject.put("id", parentId+"+reference+"+reference.getName());
+        referenceObject.put("id", "reference+"+reference.getName());
         referenceObject.put("text", reference.getName());
         referenceObject.put("im0", "Reference.gif");
         referenceObject.put("im1", "Reference.gif");
@@ -53,7 +57,6 @@ public class ReferenceProcessor implements ComplexProcessorItf {
 		org.eclipse.stp.sca.Reference reference  = (org.eclipse.stp.sca.Reference)eObject;
 		StringBuffer sb = new StringBuffer();
     	sb.append("<div class=\"component_frame_line\">");
-    		sb.append("<form>");
     		sb.append("<table>");
     		sb.append("<tr>");
     		sb.append("<td>");
@@ -111,7 +114,6 @@ public class ReferenceProcessor implements ComplexProcessorItf {
 	    			sb.append("</td>");
 	    			sb.append("</tr>");
 	    			sb.append("</table>");
-    		sb.append("</form>");
     	sb.append("</div>");
     	return sb.toString();
 	}
@@ -121,6 +123,22 @@ public class ReferenceProcessor implements ComplexProcessorItf {
 		StringBuffer sb = new StringBuffer();
 		sb.append("<a onclick=\"action('addBinding')\">Add Binding</a>");
 		sb.append("<a onclick=\"action('deleteReference')\">Delete</a>");
+		sb.append("<input type=\"submit\" value=\"Save\"/input>");
 		return sb.toString();
+	}
+
+	@Override
+	public EObject saveElement(EObject eObject, Map<String, Object> params) {
+		org.eclipse.stp.sca.Reference reference = (org.eclipse.stp.sca.Reference)eObject;
+		reference.setName((String)params.get("name"));
+		reference.setPromote((String)params.get("promote"));
+		reference.setTarget((String)params.get("target"));
+		reference.setInterface((Interface)this.complexProcessor.saveElement(reference.getInterface(), params));
+		return reference;
+	}
+
+	@Override
+	public EObject getNewEObject(EObject eObject) {
+		return ScaFactory.eINSTANCE.createReference();
 	}
 }

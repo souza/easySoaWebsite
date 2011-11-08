@@ -3,9 +3,9 @@ package org.easysoa.processor;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.stp.sca.JavaInterface;
 import org.eclipse.stp.sca.ScaFactory;
 import org.eclipse.stp.sca.ScaPackage;
+import org.eclipse.stp.sca.WSDLPortType;
 import org.json.simple.JSONObject;
 import org.osoa.sca.annotations.Reference;
 
@@ -13,28 +13,28 @@ import org.osoa.sca.annotations.Reference;
  *
  * @author Michel Dirix
  */
-public class JavaInterfaceProcessor implements ComplexProcessorItf {
+public class WsdlInterfaceProcessor implements ComplexProcessorItf {
 
 	@Reference
 	protected InterfaceProcessorItf interfaceProcessor; 
 	
     @Override
     public String getId() {
-        return ScaPackage.eINSTANCE.getJavaInterface().getEPackage().getNsURI() + "#" + ScaPackage.eINSTANCE.getJavaInterface().getName();
+        return ScaPackage.eINSTANCE.getWSDLPortType().getEPackage().getNsURI() + "#" + ScaPackage.eINSTANCE.getWSDLPortType().getName();
     }
 
     @Override
     public String getLabel(EObject eObject) {
-        return "Java";
+        return "WSDL";
     }
     
     @SuppressWarnings("unchecked")
 	@Override
     public JSONObject getMenuItem(EObject eObject, String parentId) {
-        JavaInterface javaInterface = (JavaInterface) eObject;
+        WSDLPortType wsdlInterface = (WSDLPortType) eObject;
         JSONObject interfObject = new JSONObject();
-        interfObject.put("id", "+interface+"+javaInterface.getInterface());
-        interfObject.put("text", javaInterface.getInterface());
+        interfObject.put("id", "+interface+"+wsdlInterface.getInterface());
+        interfObject.put("text", wsdlInterface.getInterface());
         interfObject.put("im0", "JavaInterface.gif");
         interfObject.put("im1", "JavaInterface.gif");
         interfObject.put("im2", "JavaInterface.gif");
@@ -43,9 +43,9 @@ public class JavaInterfaceProcessor implements ComplexProcessorItf {
 
     @Override
     public String getPanel(EObject eObject) {
-    	JavaInterface javaInterface = null;
-    	if(eObject != null) javaInterface = (JavaInterface)eObject;
-    	else javaInterface = (JavaInterface)this.getNewEObject(null);
+    	WSDLPortType wsdlInterface = null;
+    	if(eObject != null) wsdlInterface = (WSDLPortType)eObject;
+    	else wsdlInterface = (WSDLPortType)this.getNewEObject(null);
     	StringBuffer sb = new StringBuffer();
     	sb.append("<table id=\"interface-panel\">");
     	sb.append("<tr>");
@@ -54,7 +54,7 @@ public class JavaInterfaceProcessor implements ComplexProcessorItf {
     	sb.append("Interface : ");
     	sb.append("</td>");
     	sb.append("<td>");
-    	if(javaInterface.getInterface()!=null)sb.append("<input type=\"text\" id=\"interface\" name=\"interface\" size=\"40\" value=\""+javaInterface.getInterface()+"\"/>");
+    	if(wsdlInterface.getInterface()!=null)sb.append("<input type=\"text\" id=\"interface\" name=\"interface\" size=\"40\" value=\""+wsdlInterface.getInterface()+"\"/>");
     	else sb.append("<input type=\"text\" id=\"interface\" name=\"interface\" size=\"40\" value=\"\"/>");
     	sb.append("</td>");
     	sb.append("<td>");
@@ -83,14 +83,14 @@ public class JavaInterfaceProcessor implements ComplexProcessorItf {
 
 	@Override
 	public EObject saveElement(EObject eObject, Map<String, Object> params) {
-		JavaInterface javaInterface = (JavaInterface)eObject;
-		javaInterface.setInterface((String)params.get("interface"));
-		return javaInterface;
+		WSDLPortType wsdlInterface = (WSDLPortType)eObject;
+		wsdlInterface.setInterface((String)params.get("interface"));
+		return wsdlInterface;
 	}
 
 	@Override
 	public EObject getNewEObject(EObject eObject) {
-		return ScaFactory.eINSTANCE.createJavaInterface();
+		return ScaFactory.eINSTANCE.createWSDLPortType();
 	}
 	
 

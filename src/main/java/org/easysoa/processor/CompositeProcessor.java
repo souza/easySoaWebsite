@@ -1,5 +1,7 @@
 package org.easysoa.processor;
 
+import java.util.Map;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.stp.sca.Component;
 import org.eclipse.stp.sca.Composite;
@@ -37,7 +39,7 @@ public class CompositeProcessor implements ComplexProcessorItf {
 		object.put("id", 0);
 		JSONArray compositeArray = new JSONArray();
 		JSONObject compositeObject = new JSONObject();
-		compositeObject.put("id", "composite");
+		compositeObject.put("id", "composite+");
 		compositeObject.put("text", composite.getName());
 		compositeObject.put("im0", "Composite.gif");
 		compositeObject.put("im1", "Composite.gif");
@@ -65,7 +67,6 @@ public class CompositeProcessor implements ComplexProcessorItf {
 		Composite composite = (Composite) eObject;
 		StringBuffer sb = new StringBuffer();
 		sb.append("<div class=\"component_frame_line\">");
-		sb.append("<form>");
 		sb.append("<table>");
 		sb.append("<tr>");
 		sb.append("<td>");
@@ -78,7 +79,6 @@ public class CompositeProcessor implements ComplexProcessorItf {
 		sb.append("</td>");
 		sb.append("</tr>");
 		sb.append("</table>");
-		sb.append("</form>");
 		sb.append("</div>");
 		return sb.toString();
 	}
@@ -89,7 +89,21 @@ public class CompositeProcessor implements ComplexProcessorItf {
 		sb.append("<a onclick=\"action('addComponent')\">Add component</a>");
 		sb.append("<a onclick=\"action('addService')\">Add service</a>");
 		sb.append("<a onclick=\"action('addReference')\">Add reference</a>");
+		sb.append("<input type=\"submit\" value=\"Save\"/input>");
 		return sb.toString();
+	}
+
+	@Override
+	public EObject saveElement(EObject eObject, Map<String, Object> params) {
+		Composite composite = (Composite)eObject;
+		composite.setName((String)params.get("name"));
+		return composite;
+	}
+
+	@Override
+	public EObject getNewEObject(EObject eObject) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

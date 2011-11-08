@@ -5,11 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.stp.sca.Composite;
 import org.osoa.sca.annotations.Init;
 import org.osoa.sca.annotations.Reference;
 
-public class CompositeTemplate implements CompositeTemplateItf {
+public class CompositeTemplate implements CompositeTemplateProcessorItf {
 
 	@Reference
     protected List<CompositeTemplateItf> templates;
@@ -27,14 +26,11 @@ public class CompositeTemplate implements CompositeTemplateItf {
         return this.templateMap.get(templateName);
     }
 
-    @Override
-    public String getId() {
-        return null;
-    }
-
 	@Override
-	public Composite createComposite(String templateName) {
-		return this.templateMap.get(templateName).createComposite(templateName);
+	public String getTemplate(String templateName, Map<String, Object> params) {
+		String template = this.getProcessorById(templateName).getTemplate(params);
+		System.out.println(template);
+		return template;
 	}
 
 	@Override
@@ -47,7 +43,9 @@ public class CompositeTemplate implements CompositeTemplateItf {
 	}
 
 	@Override
-	public String getLabel() {
-		return null;
+	public String getForm(String templateName) {
+		return this.getProcessorById(templateName).getForm();
 	}
+
+
 }

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.stp.sca.ScaPackage;
 import org.json.simple.JSONObject;
 import org.osoa.sca.annotations.Init;
 import org.osoa.sca.annotations.Reference;
@@ -53,6 +54,16 @@ public class ComplexProcessor implements ComplexProcessorItf {
 	@Override
 	public String getActionMenu(EObject eObject) {
 		return getProcessorById(eObject).getActionMenu(eObject);
+	}
+
+	@Override
+	public EObject saveElement(EObject eObject, Map<String, Object> params) {
+		return getProcessorById(eObject).saveElement(eObject, params);
+	}
+
+	@Override
+	public EObject getNewEObject(EObject eObject) {
+		return getProcessorById(eObject).getNewEObject(eObject);
 	}
 
 }

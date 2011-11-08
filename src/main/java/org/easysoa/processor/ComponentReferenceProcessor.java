@@ -1,8 +1,12 @@
 package org.easysoa.processor;
 
+import java.util.Map;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.stp.sca.Binding;
 import org.eclipse.stp.sca.ComponentReference;
+import org.eclipse.stp.sca.Interface;
+import org.eclipse.stp.sca.ScaFactory;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.osoa.sca.annotations.Reference;
@@ -29,7 +33,7 @@ public class ComponentReferenceProcessor implements ComplexProcessorItf {
 	public JSONObject getMenuItem(EObject eObject, String parentId) {
 		ComponentReference componentReference = (ComponentReference)eObject;
 		JSONObject referenceObject = new JSONObject();
-        referenceObject.put("id", parentId+"+reference+"+componentReference.getName());
+        referenceObject.put("id", "+reference+"+componentReference.getName());
         referenceObject.put("text", componentReference.getName());
         referenceObject.put("im0", "ComponentReference.gif");
         referenceObject.put("im1", "ComponentReference.gif");
@@ -48,7 +52,6 @@ public class ComponentReferenceProcessor implements ComplexProcessorItf {
 		ComponentReference reference = (ComponentReference)eObject;
 		StringBuffer sb = new StringBuffer();
     	sb.append("<div class=\"component_frame_line\">");
-    		sb.append("<form>");
     		sb.append("<table>");
     		sb.append("<tr>");
     			sb.append("<td>");
@@ -60,10 +63,12 @@ public class ComponentReferenceProcessor implements ComplexProcessorItf {
 	    			else sb.append("<input type=\"text\" id=\"name\" name=\"name\" value=\"\"/><br/>");
 	    		sb.append("</td>");
 	    	sb.append("</tr>");
+	    	sb.append("</table>");
 	    			if(reference.getInterface()!=null){
 	    				sb.append(this.complexProcessor.getPanel(reference.getInterface()));
 	    			}
 	    			else{
+	    				sb.append("<table>");
 	    				sb.append("<tr>");
 	    				sb.append("<td>");
 	    				sb.append("<div class=\"java-interface-image\"></div>");
@@ -96,7 +101,6 @@ public class ComponentReferenceProcessor implements ComplexProcessorItf {
 	    			sb.append("</td>");
 	    			sb.append("</tr>");
 	    			sb.append("</table>");
-    		sb.append("</form>");
     	sb.append("</div>");
     	return sb.toString();
 	}
@@ -106,7 +110,22 @@ public class ComponentReferenceProcessor implements ComplexProcessorItf {
 		StringBuffer sb = new StringBuffer();
 		sb.append("<a onClick=\"action('addBinding')\">Add Binding</a>");
 		sb.append("<a onclick=\"action('deleteComponentReference')\">Delete</a>");
+		sb.append("<input type=\"submit\" value=\"Save\"/input>");
 		return sb.toString();
+	}
+
+	@Override
+	public EObject saveElement(EObject eObject, Map<String, Object> params) {
+		ComponentReference componentReference = (ComponentReference)eObject;
+		componentReference.setName((String)params.get("name"));
+		componentReference.setTarget((String)params.get("target"));
+		componentReference.setInterface((Interface)this.complexProcessor.saveElement(componentReference.getInterface(), params));
+		return componentReference;
+	}
+
+	@Override
+	public EObject getNewEObject(EObject eObject) {
+		return ScaFactory.eINSTANCE.createComponentReference();
 	}
 
 }

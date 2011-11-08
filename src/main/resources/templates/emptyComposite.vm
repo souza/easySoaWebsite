@@ -1,0 +1,18 @@
+#macro ( getLabel )Empty#end
+
+#macro ( getId )Empty#end
+
+#macro ( getForm )
+<table class="table">
+	<tr>
+		<td>Composite Name :</td><td><input type="text" id="compositeName" name="compositeName" /></td>
+	</tr>
+</table>
+#end
+
+#macro ( getTemplate )
+<?xml version="1.0" encoding="UTF-8"?>
+<composite xmlns="http://www.osoa.org/xmlns/sca/1.0" name="$arg0["compositeName"]">
+    <component name="name"/>
+</composite>
+#end

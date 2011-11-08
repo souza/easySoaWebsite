@@ -263,20 +263,20 @@ body { /*background-color:#959595;*/
 	background: #7F9DB9;
 }
 
-#table {
+.table {
 	border-spacing: 0;
 	float: left;
 	text-align: center;
 	width: 100%;
 }
 
-#table tr {
+.table tr {
 	height: 30px;
 	width: 100%;
 }
 
 
-#table td {
+.table td {
 	
 }
 
@@ -380,3 +380,4 @@ textarea {
 	padding-right: 20px;
 	cursor: pointer;
 }
+

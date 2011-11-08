@@ -1,347 +1,376 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--  EasySOA                                                                       -->
-<!--  Copyright (C) 2011 INRIA, University of Lille 1                               -->
-<!--                                                                                -->
-<!--  This library is free software; you can redistribute it and/or                 -->
-<!--  modify it under the terms of the GNU Lesser General Public                    -->
-<!--  License as published by the Free Software Foundation; either                  -->
-<!--  version 2 of the License, or (at your option) any later version.              -->
-<!--                                                                                -->
-<!--  This library is distributed in the hope that it will be useful,               -->
-<!--  but WITHOUT ANY WARRANTY; without even the implied warranty of                -->
-<!--  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU             -->
-<!--  Lesser General Public License for more details.                               -->
-<!--                                                                                -->
-<!--  You should have received a copy of the GNU Lesser General Public              -->
-<!--  License along with this library; if not, write to the Free Software           -->
-<!--  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307          -->
-<!--  USA                                                                           -->
-<!--                                                                                -->
-<!--  Contact: frascati@ow2.org                                                     -->
-<!--                                                                                -->
-<!--  Author: Michel Dirix                                                          -->
-<!--                                                                                -->
-<!--  Contributor(s):                                                               -->
-<!--                                                                                -->
-<composite xmlns="http://www.osoa.org/xmlns/sca/1.0" 
-xmlns:frascati="http://frascati.ow2.org/xmlns/sca/1.1" 
-xmlns:web="http://frascati.ow2.org/xmlns/web/1.0" xmlns:sca="http://tuscany.apache.org/xmlns/sca/1.0" 
-name="EasySOA">
-<service name="test" promote="Connection/connection"/>
+<!-- EasySOA -->
+<!-- Copyright (C) 2011 INRIA, University of Lille 1 -->
+<!-- -->
+<!-- This library is free software; you can redistribute it and/or -->
+<!-- modify it under the terms of the GNU Lesser General Public -->
+<!-- License as published by the Free Software Foundation; either -->
+<!-- version 2 of the License, or (at your option) any later version. -->
+<!-- -->
+<!-- This library is distributed in the hope that it will be useful, -->
+<!-- but WITHOUT ANY WARRANTY; without even the implied warranty of -->
+<!-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU -->
+<!-- Lesser General Public License for more details. -->
+<!-- -->
+<!-- You should have received a copy of the GNU Lesser General Public -->
+<!-- License along with this library; if not, write to the Free Software -->
+<!-- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 -->
+<!-- USA -->
+<!-- -->
+<!-- Contact: frascati@ow2.org -->
+<!-- -->
+<!-- Author: Michel Dirix -->
+<!-- -->
+<!-- Contributor(s): -->
+<!-- -->
+<composite xmlns="http://www.osoa.org/xmlns/sca/1.0"
+	xmlns:frascati="http://frascati.ow2.org/xmlns/sca/1.1" xmlns:web="http://frascati.ow2.org/xmlns/web/1.0"
+	xmlns:sca="http://tuscany.apache.org/xmlns/sca/1.0" name="EasySOA">
+	<service name="test" promote="Connection/connection" />
 
-    <component name="EasySOA">
-        <service name="Velocity">
-            <interface.java interface="javax.servlet.Servlet"/>
-            <sca:binding.http uri="/easySoa"/>
-        </service>
-        <property name="title">EasySOA</property>
-        <web:implementation.velocity location="easySoa" default="index.html"/>
-        <reference name="connection" target="Connection/connection"/>
-        <reference name="friends" target="Friends/friends"/>
-        <reference name="serviceManager" target="ServiceManager/serviceManager"/>
-        <reference name="socialNetwork" target="SocialNetwork/socialNetwork"/>
-        <reference name="utils" target="Utils/utils"/>
-        <reference name="compositeTemplates" target="TemplateProcessor/processor"/>
-    </component>
+	<component name="EasySOA">
+		<service name="Velocity">
+			<interface.java interface="javax.servlet.Servlet" />
+			<sca:binding.http uri="/easySoa" />
+		</service>
+		<property name="title">EasySOA</property>
+		<web:implementation.velocity location="easySoa"
+			default="index.html" />
+		<reference name="connection" target="Connection/connection" />
+		<reference name="friends" target="Friends/friends" />
+		<reference name="serviceManager" target="ServiceManager/serviceManager" />
+		<reference name="socialNetwork" target="SocialNetwork/socialNetwork" />
+		<reference name="utils" target="Utils/utils" />
+		<reference name="compositeTemplates" target="TemplateProcessor/processor" />
+	</component>
 
-    <!--<component name="ComponentTemplate">
-        <service name="component-panel">
-            <interface.java interface="javax.servlet.Servlet"/>
-            <sca:binding.http uri="/component/panel"/>
-        </service>
-        <web:implementation.velocity location="templates" default="component.html"/>
-        <reference name="serviceManager" target="ServiceManager/serviceManager"/>
-    </component>-->
+	<!--<component name="ComponentTemplate"> <service name="component-panel"> 
+		<interface.java interface="javax.servlet.Servlet"/> <sca:binding.http uri="/component/panel"/> 
+		</service> <web:implementation.velocity location="templates" default="component.html"/> 
+		<reference name="serviceManager" target="ServiceManager/serviceManager"/> 
+		</component> -->
 
 
-    <component name="Friends">
-        <implementation.java class="org.easysoa.impl.FriendsImpl"/>
-        <service name="friends">
-            <interface.java interface="org.easysoa.api.Friends"/>
-        </service>
-        <reference name="db" target="EASY-SOA-DB/db" />
-        <reference name="utils" target="Utils/utils"/>
-    </component>
+	<component name="Friends">
+		<implementation.java class="org.easysoa.impl.FriendsImpl" />
+		<service name="friends">
+			<interface.java interface="org.easysoa.api.Friends" />
+		</service>
+		<reference name="db" target="EASY-SOA-DB/db" />
+		<reference name="utils" target="Utils/utils" />
+	</component>
 
-    <component name="Connection">
-        <implementation.java class="org.easysoa.impl.UserImpl"/>
+	<component name="Connection">
+		<implementation.java class="org.easysoa.impl.UserImpl" />
 
-        <service name="connection">
-            <interface.java interface="org.easysoa.api.Users"/>
-        </service>
-        <reference name="friends" target="Friends/friends"/>
-        <reference name="utils" target="Utils/utils"/>
-        <reference name="db" target="EASY-SOA-DB/db" />
-    </component>
+		<service name="connection">
+			<interface.java interface="org.easysoa.api.Users" />
+		</service>
+		<reference name="friends" target="Friends/friends" />
+		<reference name="utils" target="Utils/utils" />
+		<reference name="db" target="EASY-SOA-DB/db" />
+	</component>
 
-    <component name="ServiceManager">
-        <implementation.java class="org.easysoa.impl.ServiceManagerImpl"/>
+	<component name="ServiceManager">
+		<implementation.java class="org.easysoa.impl.ServiceManagerImpl" />
 
-        <service name="serviceManager">
-            <interface.java interface="org.easysoa.api.ServiceManager"/>
-        </service>
-        <reference name="connection" target="Connection/connection"/>
-        <reference name="db" target="EASY-SOA-DB/db" />
-        <reference name="compositeParser">
-            <interface.java interface="org.ow2.frascati.parser.api.Parser"/>
-            <binding.sca uri="org.ow2.frascati.FraSCAti/sca-parser/composite-parser"/>
-        </reference>
-        <reference name="utils" target="Utils/utils"/>
-        <reference name="templates" target="TemplateProcessor/processor"/>
-    </component>
+		<service name="serviceManager">
+			<interface.java interface="org.easysoa.api.ServiceManager" />
+		</service>
+		<reference name="connection" target="Connection/connection" />
+		<reference name="db" target="EASY-SOA-DB/db" />
+		<reference name="compositeParser">
+			<interface.java interface="org.ow2.frascati.parser.api.Parser" />
+			<binding.sca uri="org.ow2.frascati.FraSCAti/sca-parser/composite-parser" />
+		</reference>
+		<reference name="utils" target="Utils/utils" />
+		<reference name="templates" target="TemplateProcessor/processor" />
+	</component>
 
-    <component name="SocialNetwork">
-        <implementation.java class="org.easysoa.impl.SocialNetworkImpl"/>
-        <service name="socialNetwork">
-            <interface.java interface="org.easysoa.api.SocialNetwork"/>
-        </service>
-    </component>
+	<component name="SocialNetwork">
+		<implementation.java class="org.easysoa.impl.SocialNetworkImpl" />
+		<service name="socialNetwork">
+			<interface.java interface="org.easysoa.api.SocialNetwork" />
+		</service>
+	</component>
 
-    <component name="Utils">
-        <implementation.java class="org.easysoa.impl.UtilsImpl"/>
+	<component name="Utils">
+		<implementation.java class="org.easysoa.impl.UtilsImpl" />
 
-        <service name="utils">
-            <interface.java interface="org.easysoa.api.Utils"/>
-        </service>
-        <reference name="db" target="EASY-SOA-DB/db" />
-    </component>
+		<service name="utils">
+			<interface.java interface="org.easysoa.api.Utils" />
+		</service>
+		<reference name="db" target="EASY-SOA-DB/db" />
+	</component>
 
-    <component name="BddInit">
-        <implementation.java class="org.easysoa.impl.BddInitImpl"/>
+	<component name="BddInit">
+		<implementation.java class="org.easysoa.impl.BddInitImpl" />
 
-        <service name="init">
-            <interface.java interface="java.lang.Runnable"/>
-        </service>
-        <reference name="db" target="EASY-SOA-DB/db" />
-    </component>
+		<service name="init">
+			<interface.java interface="java.lang.Runnable" />
+		</service>
+		<reference name="db" target="EASY-SOA-DB/db" />
+	</component>
 
-    <component name="EASY-SOA-DB">
-        <implementation.java class="org.ow2.frascati.jpa.EntityManagerProviderImpl" />
-        <service name="db">
-            <interface.java interface="org.ow2.frascati.jpa.Provider" />
-        </service>
-        <property name="persistenceUnitName">jpa-easysoa</property>
-    </component>
+	<component name="EASY-SOA-DB">
+		<implementation.java class="org.ow2.frascati.jpa.EntityManagerProviderImpl" />
+		<service name="db">
+			<interface.java interface="org.ow2.frascati.jpa.Provider" />
+		</service>
+		<property name="persistenceUnitName">jpa-easysoa</property>
+	</component>
 
-    <component name="Rest">
-        <implementation.java class="org.easysoa.impl.RESTCallImpl" />
-        <service name="rest">
-            <frascati:binding.rest uri="/rest"/>
-        </service>
-        <reference name="serviceManager" target="ServiceManager/serviceManager"/>
-        <reference name="utils" target="Utils/utils"/>
-        <reference name="processor" target="Processor/processor"/>
-    </component>
+	<component name="Rest">
+		<implementation.java class="org.easysoa.impl.RESTCallImpl" />
+		<service name="rest">
+			<frascati:binding.rest uri="/rest" />
+		</service>
+		<reference name="serviceManager" target="ServiceManager/serviceManager" />
+		<reference name="utils" target="Utils/utils" />
+		<reference name="processor" target="Processor/processor" />
+		<reference name="compositeTemplates" target="TemplateProcessor/processor" />
+		<reference name="users" target="Connection/connection" />
+		<reference name="implementations" target="ImplementationsProcessor/processor" />
+		<reference name="interfaces" target="InterfaceProcessor/processor" />
+		<reference name="bindings" target="BindingProcessor/processor" />
+	</component>
 
-    <component name="Processor">
-        <implementation.java class="org.easysoa.processor.ComplexProcessor"/>
-        <service name="processor">
-            <interface.java interface="org.easysoa.processor.ComplexProcessorItf"/>
-        </service>
-        <reference multiplicity="0..n" name="processors">
-            <interface.java interface="org.easysoa.processor.ComplexProcessorItf"/>
-        </reference>
-    </component>
-    
-    <component name="JavaImplementationProcessor">
-        <implementation.java class="org.easysoa.processor.JavaImplementationProcessor" />
-        <service name="java-implementation">
-            <interface.java interface="org.easysoa.processor.ComplexProcessorItf" />
-        </service>
-        <reference name="implementationsProcessor" target="ImplementationsProcessor/processor"/>
-    </component>
-    <wire source="Processor/processors" target="JavaImplementationProcessor/java-implementation"/>
-    <wire source="ImplementationsProcessor/processors" target="JavaImplementationProcessor/java-implementation"/>
-    
-    <component name="VelocityImplementationProcessor">
-        <implementation.java class="org.easysoa.processor.VelocityImplementationProcessor" />
-        <service name="velocity-implementation">
-            <interface.java interface="org.easysoa.processor.ComplexProcessorItf" />
-        </service>
-        <reference name="implementationsProcessor" target="ImplementationsProcessor/processor"/>
-    </component>
-    <wire source="Processor/processors" target="VelocityImplementationProcessor/velocity-implementation"/>
-    <wire source="ImplementationsProcessor/processors" target="VelocityImplementationProcessor/velocity-implementation"/>
-    
-    <component name="JavaInterfaceProcessor">
-        <implementation.java class="org.easysoa.processor.JavaInterfaceProcessor" />
-        <service name="java-interface">
-            <interface.java interface="org.easysoa.processor.ComplexProcessorItf" />
-        </service>
-         <reference name="interfaceProcessor" target="InterfaceProcessor/processor"/>
-    </component>
-    <wire source="Processor/processors" target="JavaInterfaceProcessor/java-interface"/>
-    <wire source="InterfaceProcessor/processors" target="JavaInterfaceProcessor/java-interface"/>
-    
+	<component name="Processor">
+		<implementation.java class="org.easysoa.processor.ComplexProcessor" />
+		<service name="processor">
+			<interface.java interface="org.easysoa.processor.ComplexProcessorItf" />
+		</service>
+		<reference multiplicity="0..n" name="processors">
+			<interface.java interface="org.easysoa.processor.ComplexProcessorItf" />
+		</reference>
+	</component>
+
+	<component name="JavaImplementationProcessor">
+		<implementation.java
+			class="org.easysoa.processor.JavaImplementationProcessor" />
+		<service name="java-implementation">
+			<interface.java interface="org.easysoa.processor.ComplexProcessorItf" />
+		</service>
+		<reference name="implementationsProcessor" target="ImplementationsProcessor/processor" />
+	</component>
+	<wire source="Processor/processors" target="JavaImplementationProcessor/java-implementation" />
+	<wire source="ImplementationsProcessor/processors" target="JavaImplementationProcessor/java-implementation" />
+
+	<component name="VelocityImplementationProcessor">
+		<implementation.java
+			class="org.easysoa.processor.VelocityImplementationProcessor" />
+		<service name="velocity-implementation">
+			<interface.java interface="org.easysoa.processor.ComplexProcessorItf" />
+		</service>
+		<reference name="implementationsProcessor" target="ImplementationsProcessor/processor" />
+	</component>
+	<wire source="Processor/processors"
+		target="VelocityImplementationProcessor/velocity-implementation" />
+	<wire source="ImplementationsProcessor/processors"
+		target="VelocityImplementationProcessor/velocity-implementation" />
+
+	<component name="JavaInterfaceProcessor">
+		<implementation.java class="org.easysoa.processor.JavaInterfaceProcessor" />
+		<service name="java-interface">
+			<interface.java interface="org.easysoa.processor.ComplexProcessorItf" />
+		</service>
+		<reference name="interfaceProcessor" target="InterfaceProcessor/processor" />
+	</component>
+	<wire source="Processor/processors" target="JavaInterfaceProcessor/java-interface" />
+	<wire source="InterfaceProcessor/processors" target="JavaInterfaceProcessor/java-interface" />
+	
+	<component name="WsdlInterfaceProcessor">
+		<implementation.java class="org.easysoa.processor.WsdlInterfaceProcessor" />
+		<service name="wsdl-interface">
+			<interface.java interface="org.easysoa.processor.ComplexProcessorItf" />
+		</service>
+		<reference name="interfaceProcessor" target="InterfaceProcessor/processor" />
+	</component>
+	<wire source="Processor/processors" target="WsdlInterfaceProcessor/wsdl-interface" />
+	<wire source="InterfaceProcessor/processors" target="WsdlInterfaceProcessor/wsdl-interface" />
+
 	<component name="ScaBindingProcessor">
-        <implementation.java class="org.easysoa.processor.ScaBindingProcessor" />
-        <service name="sca-binding">
-            <interface.java interface="org.easysoa.processor.ComplexProcessorItf" />
-        </service>
-        <reference name="bindingProcessor" target="BindingProcessor/processor"/>
-    </component>
-    <wire source="Processor/processors" target="ScaBindingProcessor/sca-binding"/>
-    <wire source="BindingProcessor/processors" target="ScaBindingProcessor/sca-binding"/>
-    
-    <component name="RestBindingProcessor">
-        <implementation.java class="org.easysoa.processor.RestBindingProcessor" />
-        <service name="rest-binding">
-            <interface.java interface="org.easysoa.processor.ComplexProcessorItf" />
-        </service>
-        <reference name="bindingProcessor" target="BindingProcessor/processor"/>
-    </component>
-    <wire source="Processor/processors" target="RestBindingProcessor/rest-binding"/>
-    <wire source="BindingProcessor/processors" target="RestBindingProcessor/rest-binding"/>
-    
-    <component name="HttpBindingProcessor">
-        <implementation.java class="org.easysoa.processor.HttpBindingProcessor" />
-        <service name="http-binding">
-            <interface.java interface="org.easysoa.processor.ComplexProcessorItf" />
-        </service>
-        <reference name="bindingProcessor" target="BindingProcessor/processor"/>
-    </component>
-    <wire source="Processor/processors" target="HttpBindingProcessor/http-binding"/>
-    <wire source="BindingProcessor/processors" target="HttpBindingProcessor/http-binding"/>
-    
-    <component name="WebServiceBindingProcessor">
-        <implementation.java class="org.easysoa.processor.WebServiceBindingProcessor" />
-        <service name="ws-binding">
-            <interface.java interface="org.easysoa.processor.ComplexProcessorItf" />
-        </service>
-        <reference name="bindingProcessor" target="BindingProcessor/processor"/>
-    </component>
-    <wire source="Processor/processors" target="WebServiceBindingProcessor/ws-binding"/>
-    <wire source="BindingProcessor/processors" target="WebServiceBindingProcessor/ws-binding"/>
-    
-    <component name="PropertyValueProcessor">
-        <implementation.java class="org.easysoa.processor.PropertyValueProcessor" />
-        <service name="property">
-            <interface.java interface="org.easysoa.processor.ComplexProcessorItf" />
-        </service>
-    </component>
-    <wire source="Processor/processors" target="PropertyValueProcessor/property"/>
-    
-    <component name="ServiceProcessor">
-        <implementation.java class="org.easysoa.processor.ServiceProcessor" />
-        <service name="service">
-            <interface.java interface="org.easysoa.processor.ComplexProcessorItf" />
-        </service>
-        <reference name="complexProcessor" target="Processor/processor"/>
-        <reference name="interfaceProcessor" target="InterfaceProcessor/processor"/>
-    </component>
-    <wire source="Processor/processors" target="ServiceProcessor/service"/>
-    
-    <component name="ReferenceProcessor">
-        <implementation.java class="org.easysoa.processor.ReferenceProcessor" />
-        <service name="reference">
-            <interface.java interface="org.easysoa.processor.ComplexProcessorItf" />
-        </service>
-        <reference name="complexProcessor" target="Processor/processor"/>
-        <reference name="interfaceProcessor" target="InterfaceProcessor/processor"/>
-    </component>
-    <wire source="Processor/processors" target="ReferenceProcessor/reference"/>
-    
-    <component name="ComponentServiceProcessor">
-        <implementation.java class="org.easysoa.processor.ComponentServiceProcessor" />
-        <service name="service">
-            <interface.java interface="org.easysoa.processor.ComplexProcessorItf" />
-        </service>
-        <reference name="complexProcessor" target="Processor/processor"/>
-        <reference name="interfaceProcessor" target="InterfaceProcessor/processor"/>
-    </component>
-    <wire source="Processor/processors" target="ComponentServiceProcessor/service"/>
-    
-    <component name="ComponentReferenceProcessor">
-        <implementation.java class="org.easysoa.processor.ComponentReferenceProcessor" />
-        <service name="reference">
-            <interface.java interface="org.easysoa.processor.ComplexProcessorItf" />
-        </service>
-        <reference name="complexProcessor" target="Processor/processor"/>
-        <reference name="interfaceProcessor" target="InterfaceProcessor/processor"/>
-    </component>
-    <wire source="Processor/processors" target="ComponentReferenceProcessor/reference"/>
-    
-    <component name="ComponentProcessor">
-        <implementation.java class="org.easysoa.processor.ComponentProcessor" />
-        <service name="componentProcessor">
-            <interface.java interface="org.easysoa.processor.ComplexProcessorItf" />
-        </service>
-        <reference name="complexProcessor" target="Processor/processor"/>
-        <reference name="implementationProcessor" target="ImplementationsProcessor/processor"/>
-    </component>
-    <wire source="Processor/processors" target="ComponentProcessor/componentProcessor"/>
-    
-    <component name="CompositeProcessor">
-        <implementation.java class="org.easysoa.processor.CompositeProcessor" />
-        <service name="composite">
-            <interface.java interface="org.easysoa.processor.ComplexProcessorItf" />
-        </service>
-        <reference name="complexProcessor" target="Processor/processor"/>
-    </component>
-    <wire source="Processor/processors" target="CompositeProcessor/composite"/>
-    
-    
-    <component name="TemplateProcessor">
-        <implementation.java class="org.easysoa.compositeTemplates.CompositeTemplate"/>
-        <service name="processor">
-            <interface.java interface="org.easysoa.compositeTemplates.CompositeTemplateItf"/>
-        </service>
-        <reference multiplicity="0..n" name="templates">
-            <interface.java interface="org.easysoa.compositeTemplates.CompositeTemplateItf"/>
-        </reference>
-    </component>
-    
-    <component name="EmptyTemplateProcessor">
-        <implementation.java class="org.easysoa.compositeTemplates.EmptyCompositeProcessor" />
-        <service name="template">
-            <interface.java interface="org.easysoa.compositeTemplates.CompositeTemplateItf" />
-        </service>
-    </component>
-    <wire source="TemplateProcessor/templates" target="EmptyTemplateProcessor/template"/>
-    
-    <component name="ProxyTemplateProcessor">
-        <implementation.java class="org.easysoa.compositeTemplates.ProxyFactoryCompositeProcessor" />
-        <service name="template">
-            <interface.java interface="org.easysoa.compositeTemplates.CompositeTemplateItf" />
-        </service>
-    </component>
-    <wire source="TemplateProcessor/templates" target="ProxyTemplateProcessor/template"/>
-    
-    <component name="ImplementationsProcessor">
-        <implementation.java class="org.easysoa.processor.ImplementationsProcessor"/>
-        <service name="processor">
-            <interface.java interface="org.easysoa.processor.ImplementationsProcessorItf"/>
-        </service>
-        <reference multiplicity="0..n" name="processors">
-            <interface.java interface="org.easysoa.processor.ComplexProcessorItf"/>
-        </reference>
-    </component>
-    
-    <component name="InterfaceProcessor">
-        <implementation.java class="org.easysoa.processor.InterfaceProcessor"/>
-        <service name="processor">
-            <interface.java interface="org.easysoa.processor.InterfaceProcessorItf"/>
-        </service>
-        <reference multiplicity="0..n" name="processors">
-            <interface.java interface="org.easysoa.processor.ComplexProcessorItf"/>
-        </reference>
-    </component>
-    
-    <component name="BindingProcessor">
-        <implementation.java class="org.easysoa.processor.BindingProcessor"/>
-        <service name="processor">
-            <interface.java interface="org.easysoa.processor.BindingProcessorItf"/>
-        </service>
-        <reference multiplicity="0..n" name="processors">
-            <interface.java interface="org.easysoa.processor.ComplexProcessorItf"/>
-        </reference>
-    </component>
-    
-    <component name="ComponentsFactory">
-    	<implementation.java class="org.easysoa.model.ComponentsFactory"/>
-    	<service name="components-factory">
-    		<interface.java interface="org.easysoa.model.ComponentsFactoryItf"/>
-    	</service>
-    </component>
-    
+		<implementation.java class="org.easysoa.processor.ScaBindingProcessor" />
+		<service name="sca-binding">
+			<interface.java interface="org.easysoa.processor.ComplexProcessorItf" />
+		</service>
+		<reference name="bindingProcessor" target="BindingProcessor/processor" />
+	</component>
+	<wire source="Processor/processors" target="ScaBindingProcessor/sca-binding" />
+	<wire source="BindingProcessor/processors" target="ScaBindingProcessor/sca-binding" />
+
+	<component name="RestBindingProcessor">
+		<implementation.java class="org.easysoa.processor.RestBindingProcessor" />
+		<service name="rest-binding">
+			<interface.java interface="org.easysoa.processor.ComplexProcessorItf" />
+		</service>
+		<reference name="bindingProcessor" target="BindingProcessor/processor" />
+	</component>
+	<wire source="Processor/processors" target="RestBindingProcessor/rest-binding" />
+	<wire source="BindingProcessor/processors" target="RestBindingProcessor/rest-binding" />
+
+	<component name="HttpBindingProcessor">
+		<implementation.java class="org.easysoa.processor.HttpBindingProcessor" />
+		<service name="http-binding">
+			<interface.java interface="org.easysoa.processor.ComplexProcessorItf" />
+		</service>
+		<reference name="bindingProcessor" target="BindingProcessor/processor" />
+	</component>
+	<wire source="Processor/processors" target="HttpBindingProcessor/http-binding" />
+	<wire source="BindingProcessor/processors" target="HttpBindingProcessor/http-binding" />
+
+	<component name="WebServiceBindingProcessor">
+		<implementation.java class="org.easysoa.processor.WebServiceBindingProcessor" />
+		<service name="ws-binding">
+			<interface.java interface="org.easysoa.processor.ComplexProcessorItf" />
+		</service>
+		<reference name="bindingProcessor" target="BindingProcessor/processor" />
+	</component>
+	<wire source="Processor/processors" target="WebServiceBindingProcessor/ws-binding" />
+	<wire source="BindingProcessor/processors" target="WebServiceBindingProcessor/ws-binding" />
+
+	<component name="PropertyValueProcessor">
+		<implementation.java class="org.easysoa.processor.PropertyValueProcessor" />
+		<service name="property">
+			<interface.java interface="org.easysoa.processor.ComplexProcessorItf" />
+		</service>
+	</component>
+	<wire source="Processor/processors" target="PropertyValueProcessor/property" />
+
+	<component name="ServiceProcessor">
+		<implementation.java class="org.easysoa.processor.ServiceProcessor" />
+		<service name="service">
+			<interface.java interface="org.easysoa.processor.ComplexProcessorItf" />
+		</service>
+		<reference name="complexProcessor" target="Processor/processor" />
+		<reference name="interfaceProcessor" target="InterfaceProcessor/processor" />
+	</component>
+	<wire source="Processor/processors" target="ServiceProcessor/service" />
+
+	<component name="ReferenceProcessor">
+		<implementation.java class="org.easysoa.processor.ReferenceProcessor" />
+		<service name="reference">
+			<interface.java interface="org.easysoa.processor.ComplexProcessorItf" />
+		</service>
+		<reference name="complexProcessor" target="Processor/processor" />
+		<reference name="interfaceProcessor" target="InterfaceProcessor/processor" />
+	</component>
+	<wire source="Processor/processors" target="ReferenceProcessor/reference" />
+
+	<component name="ComponentServiceProcessor">
+		<implementation.java class="org.easysoa.processor.ComponentServiceProcessor" />
+		<service name="service">
+			<interface.java interface="org.easysoa.processor.ComplexProcessorItf" />
+		</service>
+		<reference name="complexProcessor" target="Processor/processor" />
+		<reference name="interfaceProcessor" target="InterfaceProcessor/processor" />
+	</component>
+	<wire source="Processor/processors" target="ComponentServiceProcessor/service" />
+
+	<component name="ComponentReferenceProcessor">
+		<implementation.java
+			class="org.easysoa.processor.ComponentReferenceProcessor" />
+		<service name="reference">
+			<interface.java interface="org.easysoa.processor.ComplexProcessorItf" />
+		</service>
+		<reference name="complexProcessor" target="Processor/processor" />
+		<reference name="interfaceProcessor" target="InterfaceProcessor/processor" />
+	</component>
+	<wire source="Processor/processors" target="ComponentReferenceProcessor/reference" />
+
+	<component name="ComponentProcessor">
+		<implementation.java class="org.easysoa.processor.ComponentProcessor" />
+		<service name="componentProcessor">
+			<interface.java interface="org.easysoa.processor.ComplexProcessorItf" />
+		</service>
+		<reference name="complexProcessor" target="Processor/processor" />
+		<reference name="implementationProcessor" target="ImplementationsProcessor/processor" />
+	</component>
+	<wire source="Processor/processors" target="ComponentProcessor/componentProcessor" />
+
+	<component name="CompositeProcessor">
+		<implementation.java class="org.easysoa.processor.CompositeProcessor" />
+		<service name="composite">
+			<interface.java interface="org.easysoa.processor.ComplexProcessorItf" />
+		</service>
+		<reference name="complexProcessor" target="Processor/processor" />
+	</component>
+	<wire source="Processor/processors" target="CompositeProcessor/composite" />
+
+
+
+
+	<component name="ImplementationsProcessor">
+		<implementation.java class="org.easysoa.processor.ImplementationsProcessor" />
+		<service name="processor">
+			<interface.java interface="org.easysoa.processor.ImplementationsProcessorItf" />
+		</service>
+		<reference multiplicity="0..n" name="processors">
+			<interface.java interface="org.easysoa.processor.ComplexProcessorItf" />
+		</reference>
+		<reference name="serviceManager" target="ServiceManager/serviceManager" />
+		<reference name="utils" target="Utils/utils" />
+	</component>
+
+	<component name="InterfaceProcessor">
+		<implementation.java class="org.easysoa.processor.InterfaceProcessor" />
+		<service name="processor">
+			<interface.java interface="org.easysoa.processor.InterfaceProcessorItf" />
+		</service>
+		<reference multiplicity="0..n" name="processors">
+			<interface.java interface="org.easysoa.processor.ComplexProcessorItf" />
+		</reference>
+		<reference name="serviceManager" target="ServiceManager/serviceManager" />
+		<reference name="utils" target="Utils/utils" />
+	</component>
+
+	<component name="BindingProcessor">
+		<implementation.java class="org.easysoa.processor.BindingProcessor" />
+		<service name="processor">
+			<interface.java interface="org.easysoa.processor.BindingProcessorItf" />
+		</service>
+		<reference multiplicity="0..n" name="processors">
+			<interface.java interface="org.easysoa.processor.ComplexProcessorItf" />
+		</reference>
+		<reference name="serviceManager" target="ServiceManager/serviceManager" />
+		<reference name="utils" target="Utils/utils" />
+	</component>
+
+	<component name="ComponentsFactory">
+		<implementation.java class="org.easysoa.model.ComponentsFactory" />
+		<service name="components-factory">
+			<interface.java interface="org.easysoa.model.ComponentsFactoryItf" />
+		</service>
+		
+	</component>
+
+	<component name="TemplateProcessor">
+		<implementation.java
+			class="org.easysoa.compositeTemplates.CompositeTemplate" />
+		<service name="processor">
+			<interface.java
+				interface="org.easysoa.compositeTemplates.CompositeTemplateProcessorItf" />
+		</service>
+		<reference multiplicity="0..n" name="templates">
+			<interface.java interface="org.easysoa.compositeTemplates.CompositeTemplateItf" />
+		</reference>
+	</component>
+
+	<component name="EmptyTemplate">
+		<web:implementation.velocity location="templates"
+			default="emptyComposite.vm" />
+		<service name="template">
+			<interface.java interface="org.easysoa.compositeTemplates.CompositeTemplateItf" />
+		</service>
+	</component>
+	<wire source="TemplateProcessor/templates" target="EmptyTemplate/template" />
+
+	<component name="ProxyWSTemplate">
+		<web:implementation.velocity location="templates"
+			default="proxyWSComposite.vm" />
+		<service name="template">
+			<interface.java interface="org.easysoa.compositeTemplates.CompositeTemplateItf" />
+		</service>
+	</component>
+	<wire source="TemplateProcessor/templates" target="ProxyWSTemplate/template" />
 </composite>

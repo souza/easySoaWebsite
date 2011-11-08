@@ -1,3 +1,12 @@
 #set($user = $request.getSession().getAttribute("user"))
-$serviceManager.createService($user, $name ,$description,$package,$template)
-$response.sendRedirect("myservices.html")
+#set( $args = $compositeTemplates.getNeededParams($template) )
+#foreach ($mapEntry in $args.entrySet())
+    <name>$mapEntry.key</name>
+    <value>$mapEntry.value</value>
+    #set($mapEntry.value = #evaluate($mapEntry.value))
+    <name>$mapEntry.key</name>
+    <valueModified>$mapEntry.value</valueModified>
+#end
+
+##$serviceManager.createService($user, $name ,$description,$package,$template,$args)
+##$response.sendRedirect("myservices.html")

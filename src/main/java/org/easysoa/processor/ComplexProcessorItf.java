@@ -1,5 +1,7 @@
 package org.easysoa.processor;
 
+import java.util.Map;
+
 import org.eclipse.emf.ecore.EObject;
 import org.json.simple.JSONObject;
 import org.osoa.sca.annotations.Service;
@@ -21,4 +23,7 @@ public interface ComplexProcessorItf{
     
     String getActionMenu(EObject eObject);
     
+    EObject saveElement(EObject eObject, Map<String, Object> params);
+    
+    EObject getNewEObject(EObject eObject);
 }

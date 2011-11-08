@@ -7,9 +7,23 @@ activateMenuTabSelected('services');
 window.localStorage.removeItem('serviceView');
 </script>
 <div id="rounded-div-content">
-    #set($userApps = $request.getSession().getAttribute("user").getProvidedApplications())
+	#set($user = $connection.connect($user.getLogin(),$user.getPassword()))
+	$request.getSession().setAttribute("user",$user)
+    #set($userApps = $user.getProvidedApplications())
     
-        <table id="table">
+        <table class="table">
+        <tr>
+        <th>
+        Service name
+        </th>
+        <th>
+        Description
+        </th>
+        <th>
+        </th>
+        <th>
+        </th>
+        </tr>
             #foreach($app in $userApps)
             #if($velocityCount%2==0)
             <tr id="white">

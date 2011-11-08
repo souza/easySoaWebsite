@@ -37,5 +37,35 @@ public interface RESTCall {
   @Path("/addElement")
   @Produces("text/plain")
   void addElement(@FormParam("id")String id,@FormParam("action")String action);
+  
+  @POST
+  @Path("/saveElement")
+  @Produces("text/plain")
+  void saveElement(String params);
+  
+  @GET
+  @Path("/templateForm")
+  @Produces("text/plain")
+  String getTemplateForm(@FormParam("templateName")String templateName);
+  
+  @POST
+  @Path("/createApplication")
+  @Produces("text/plain")
+  void createApplication(String params);
+  
+  @GET
+  @Path("/implementationContent")
+  @Produces("text/plain")
+  String getImplementationContent(@FormParam("modelId")String modelId,@FormParam("id")String id);
+  
+  @GET
+  @Path("/interfaceContent")
+  @Produces("text/plain")
+  String getInterfaceContent(@FormParam("modelId")String modelId, @FormParam("id")String id);
+  
+  @GET
+  @Path("/bindingContent")
+  @Produces("text/plain")
+  String getBindingContent(@FormParam("modelId")String modelId, @FormParam("id")String id);
 
 }

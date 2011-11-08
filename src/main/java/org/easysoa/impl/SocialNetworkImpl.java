@@ -13,8 +13,6 @@ public class SocialNetworkImpl implements SocialNetwork{
 
     @Override
     public void postOnTwitter(String message, String userName, String password) {
-        System.out.println("user : "+userName);
-        System.out.println("pass : "+password);
         Api api = Api.builder().username(userName).password(password).build();
         api.updateStatus(message).build().post();
     }

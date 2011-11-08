@@ -2,20 +2,20 @@
 #parse("header.html")
 #parse("roundedDiv.html")
 #set($templates = $compositeTemplates.allAvailableTemplatesLabel())
+#set($user = $request.getSession().getAttribute("user"))
 <div id="welcome-title">Create Application</div>
 
-<script type="text/javascript">
-    activateMenuTabSelected('create');
-</script>
+
 <div id="friends">
-    <FORM METHOD="POST" ACTION="/easySoa/serviceCreation" >
-        <table id="table">
+    <FORM METHOD="POST" id="create">
+        <table class="table">
             <tr>
                 <td>
                     Application name :
                 </td>
                 <td>
                     <input type="text" name="name" id="name" />
+                    <input type="hidden" name="user" id="user" value="$user.getId()"/>
                 </td>
             </tr>
             <tr>
@@ -39,12 +39,17 @@
                     Template name :
                 </td>
                 <td>
-                    <select name="template" id="template" >
+                    <select name="template" id="template" onChange="getTemplateForm()">
                     	#foreach($template in $templates)
                     		<option>$template</option>
                     	#end
                     </select>
                 </td>
+            </tr>
+            <tr>
+            	<td id="templateForm" colspan="2">
+            	
+            	</td>
             </tr>
             <tr>
                 <td colspan="2" align="center"><input type="submit" class="orange button" value="Create service" />
@@ -53,4 +58,15 @@
         </table>
     </FORM>
 </div>
+<script type="text/javascript">
+    activateMenuTabSelected('create');
+    getTemplateForm();
+    
+    $('form').submit(function() {
+    	$.post("/rest/createApplication", $(this).serialize(),function(data){
+    		$(location).attr('href',"myservices.html");
+    	});
+    	return false;
+    	});
+</script>
 #parse("footpage.html")

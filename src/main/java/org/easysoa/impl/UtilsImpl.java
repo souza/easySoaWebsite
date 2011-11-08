@@ -43,14 +43,12 @@ public class UtilsImpl implements Utils {
 
 	@Override
 	public String getTownSuggestions(String townName) {
-		System.out.println("getTownSuggestions");
 		EntityManager em = db.get();
 		em.getTransaction().begin();
 		Query query = em
 				.createQuery("SELECT DISTINCT t.townName FROM Town t WHERE t.townName LIKE :name");
 		query.setParameter("name", townName + "%");
 		java.util.List<String> search = query.getResultList();
-		System.out.println(search.size());
 		StringBuffer sb = new StringBuffer("[");
 		for (int i = 0; i < search.size(); i++) {
 			sb.append("\"" + search.get(i) + "\"");

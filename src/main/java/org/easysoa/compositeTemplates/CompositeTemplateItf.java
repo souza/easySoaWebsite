@@ -1,8 +1,7 @@
 package org.easysoa.compositeTemplates;
 
-import java.util.List;
+import java.util.Map;
 
-import org.eclipse.stp.sca.Composite;
 import org.osoa.sca.annotations.Service;
 
 /**
@@ -14,10 +13,11 @@ public interface CompositeTemplateItf {
 
 	String getId();
 
-	Composite createComposite(String templateName);
-	
-	List<String> allAvailableTemplatesLabel();
+	String getTemplate(Map<String, Object> params);
 	
 	String getLabel();
+	
+	String getForm();
+	
 	
 }

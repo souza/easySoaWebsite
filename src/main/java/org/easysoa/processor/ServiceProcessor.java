@@ -1,7 +1,11 @@
 package org.easysoa.processor;
 
+import java.util.Map;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.stp.sca.Binding;
+import org.eclipse.stp.sca.Interface;
+import org.eclipse.stp.sca.ScaFactory;
 import org.eclipse.stp.sca.ScaPackage;
 import org.eclipse.stp.sca.Service;
 import org.json.simple.JSONArray;
@@ -30,7 +34,7 @@ public class ServiceProcessor implements ComplexProcessorItf{
 	public JSONObject getMenuItem(EObject eObject, String parentId) {
 		Service service = (Service)eObject;
 		JSONObject serviceJSONObject = new JSONObject();
-        serviceJSONObject.put("id", parentId+"service+"+service.getName());
+        serviceJSONObject.put("id", "service+"+service.getName());
         serviceJSONObject.put("text", service.getName());
         serviceJSONObject.put("im0", "Service.gif");
         serviceJSONObject.put("im1", "Service.gif");
@@ -53,7 +57,6 @@ public class ServiceProcessor implements ComplexProcessorItf{
 		Service service  = (Service)eObject;
 		StringBuffer sb = new StringBuffer();
     	sb.append("<div class=\"component_frame_line\">");
-    		sb.append("<form>");
     		sb.append("<table>");
     		sb.append("<tr>");
     		sb.append("<td>");
@@ -65,10 +68,12 @@ public class ServiceProcessor implements ComplexProcessorItf{
 	    			else sb.append("<input type=\"text\" id=\"name\" name=\"name\" value=\"\"/><br/>");
 	    			sb.append("</td>");
 	    			sb.append("</tr>");
+	    			sb.append("</table>");
 	    			if(service.getInterface()!=null){
 	    				sb.append(this.complexProcessor.getPanel(service.getInterface()));
 	    			}
 	    			else{
+	    				sb.append("<table>");
 	    				sb.append("<tr>");
 	    				sb.append("<td>");
 	    				sb.append("<div class=\"java-interface-image\"></div>");
@@ -102,7 +107,6 @@ public class ServiceProcessor implements ComplexProcessorItf{
 	    			sb.append("</td>");
 	    			sb.append("</tr>");
 	    			sb.append("</table>");
-    		sb.append("</form>");
     	sb.append("</div>");
     	return sb.toString();
 	}
@@ -112,6 +116,21 @@ public class ServiceProcessor implements ComplexProcessorItf{
 		StringBuffer sb = new StringBuffer();
 		sb.append("<a onclick=\"action('binding')\">Add Binding</a>");
 		sb.append("<a onclick=\"action('deleteService')\">Delete</a>");
+		sb.append("<input type=\"submit\" value=\"Save\"/input>");
 		return sb.toString();
+	}
+
+	@Override
+	public EObject saveElement(EObject eObject, Map<String, Object> params) {
+		Service service = (Service)eObject;
+		service.setName((String)params.get("name"));
+		service.setPromote((String)params.get("promote"));
+		service.setInterface((Interface)this.complexProcessor.saveElement(service.getInterface(), params));
+		return service;
+	}
+
+	@Override
+	public EObject getNewEObject(EObject eObject) {
+		return ScaFactory.eINSTANCE.createService();
 	}
 }

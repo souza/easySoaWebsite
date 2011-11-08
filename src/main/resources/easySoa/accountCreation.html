@@ -89,4 +89,12 @@ $("#town").autocomplete({
 });
 </script>
 
+<script>
+$.get("www.memo.fr/partenaires/MWLavService.asmx/getCitiesList?", { query: "John", time: "2pm" },
+		  function(data){
+		    alert("Data Loaded: " + data);
+		  });
+
+</script>
+
 #parse("footpage.html")
