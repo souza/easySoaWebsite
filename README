@@ -1,0 +1,27 @@
+-------------------------------------------------------------------------------------------
+|                                      INSTALLATION                                       |
+-------------------------------------------------------------------------------------------
+
+BASE DE DONNEE
+	
+	Windows
+		- Installer EasyPHP
+		- Créer la base de données easysoasimplified
+		- Changer le fichier pom en modifiant le port par 3306 
+		
+	Mac
+		- Installer MAMP
+		- Créer la base de données easysoasimplified
+
+
+
+Lors du premier lancement du site, lors de la creation compte, il y aura une erreur car les tables vont être crees a ce moment la, et la table Town n'etant pas initialisee, le formulaire de creation se plante. 
+Il faut pour cela charger le script Town.sql dans la base pour initialiser cette table. 
+Pour cela, utilisez l'onglez importer en haut du gestion de base de donnees dans la base easysoasimplified.
+Une fois ceci fait, vous pouvez relancer le formulaire de creation de compte.
+
+COMPILATION ET EXECUTION
+
+Pour la compilation et le lancement du site, il faut utiliser les scripts suivants :
+Windows : compile.bat puis run.bat
+Mac : compile.sh puis run.sh
