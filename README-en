@@ -1,0 +1,27 @@
+-------------------------------------------------------------------------------------------
+|                                      INSTALLATION                                       |
+-------------------------------------------------------------------------------------------
+
+DATABSE
+	
+	Windows
+		- Install EasyPHP
+		- Create a database named easysoasimplified
+		- Change your pom file in modifying the port by 3306 
+		
+	Mac
+		- Install MAMP
+		- Create a database named easysoasimplified
+
+
+
+For the first launch, when you will create an account, you will have an error because tables wil be created at this moment so, the Town table is not initialized, and the creation form doesn't work. 
+So you have to load the Town.sql script in the database to initialize this table. 
+For that, use the tab at the top of the database manager in the database easysoasimplified.
+After that, you can reload the account creation.
+
+COMPILATION AND EXECUTION
+
+For the compilation and the launch of the website, you can use the following scripts :
+Windows : compile.bat then run.bat
+Mac : compile.sh then run.sh
