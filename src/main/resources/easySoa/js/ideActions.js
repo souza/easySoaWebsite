@@ -34,6 +34,8 @@ function handler() {
 		tree.setDataMode("json");
 		tree.setImagePath("images/sca/");
 		tree.attachEvent("onClick", onTreeClick);
+		tree.attachEvent("onSelect", onTreeClick);
+		tree.enableKeyboardNavigation(true);
 		tree.loadJSONObject(json, function() {
 		});
 

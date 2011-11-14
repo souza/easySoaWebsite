@@ -13,6 +13,9 @@
 #macro ( getTemplate )
 <?xml version="1.0" encoding="UTF-8"?>
 <composite xmlns="http://www.osoa.org/xmlns/sca/1.0" name="$arg0["compositeName"]">
-    <component name="name"/>
+
 </composite>
+#end
+
+#macro ( doActionAfterCreation )
 #end

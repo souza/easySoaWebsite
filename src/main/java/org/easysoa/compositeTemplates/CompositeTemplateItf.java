@@ -19,5 +19,6 @@ public interface CompositeTemplateItf {
 	
 	String getForm();
 	
+	String doActionAfterCreation(Map<String,Object> params);
 	
 }

@@ -46,6 +46,11 @@ public class CompositeTemplate implements CompositeTemplateProcessorItf {
 	public String getForm(String templateName) {
 		return this.getProcessorById(templateName).getForm();
 	}
+	
+	@Override
+	public void doActionAfterCreation(String templateName, Map<String, Object> params){
+		this.getProcessorById(templateName).doActionAfterCreation(params);
+	}
 
 
 }

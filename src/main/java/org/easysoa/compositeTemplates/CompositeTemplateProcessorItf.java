@@ -10,5 +10,7 @@ public interface CompositeTemplateProcessorItf {
 	List<String> allAvailableTemplatesLabel();
 	
 	String getForm(String templateName);
+
+	void doActionAfterCreation(String templateName, Map<String, Object> params);
 	
 }

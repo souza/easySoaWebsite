@@ -35,10 +35,14 @@
     	</reference>
     </component>
     <service name="serviceProxy" promote="proxy_$arg0["compositeName"]/wsdl-service">
-    	<frascati:binding.rest name="rest" uri="/rest" />
+    	<binding.ws uri="/service"/>
     </service>
     <reference name="wsdl-delegated" promote="proxy_$arg0["compositeName"]/wsdl-reference">
     	<binding.ws name="wsdl" wsdlElement="${arg0["url"]}#wsdl.port($arg0["service"]/$arg0["port"])" wsdli:wsdlLocation="$arg0["url"]?wsdl"/>
     </reference>
 </composite>
+#end
+
+#macro ( doActionAfterCreation )
+	$wsdlGenerator.generate("$arg0['service']","$arg0['port']","$arg0['url']?wsdl");
 #end
