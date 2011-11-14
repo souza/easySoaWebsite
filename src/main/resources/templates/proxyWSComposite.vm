@@ -35,7 +35,7 @@
     	</reference>
     </component>
     <service name="serviceProxy" promote="proxy-$arg0["compositeName"]/wsdl-service">
-    	<binding.ws uri="/service"/>
+    	<binding.ws name="ws" uri="/service"/>
     </service>
     <reference name="wsdl-delegated" promote="proxy-$arg0["compositeName"]/wsdl-reference">
     	<binding.ws name="wsdl" wsdlElement="${arg0["url"]}#wsdl.port($arg0["service"]/$arg0["port"])" wsdli:wsdlLocation="$arg0["url"]?wsdl"/>
