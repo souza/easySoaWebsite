@@ -74,6 +74,9 @@ public class RESTCallImpl implements RESTCall {
 
 	private synchronized EObject getComponent(String id) {
 		String[] ids = id.split(" ");
+		if(ids[ids.length-1].contains("_")){
+			ids[ids.length-1] = ids[ids.length-1].substring(0, ids[ids.length-1].indexOf("_"));
+		}
 		Composite composite = serviceManager.getComposite();
 		// composite
 		if (ids.length == 1) {
