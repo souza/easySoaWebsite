@@ -26,18 +26,18 @@
 #macro ( getTemplate )
 <?xml version="1.0" encoding="UTF-8"?>
 <composite xmlns="http://www.osoa.org/xmlns/sca/1.0" xmlns:wsdli="http://www.w3.org/2004/08/wsdl-instance" xmlns:frascati="http://frascati.ow2.org/xmlns/sca/1.1" name="$arg0["compositeName"]">
-    <component name="proxy_$arg0["compositeName"]">
+    <component name="proxy-$arg0["compositeName"]">
     	<service name="wsdl-service">
-    		<interface.wsdl interface= "$arg0["url"]"/>
+    		<interface.wsdl interface="$arg0["url"]"/>
     	</service>
     	<reference name="wsdl-reference">
-    		<interface.wsdl interface = "$arg0["url"]"/>
+    		<interface.wsdl interface ="$arg0["url"]"/>
     	</reference>
     </component>
-    <service name="serviceProxy" promote="proxy_$arg0["compositeName"]/wsdl-service">
+    <service name="serviceProxy" promote="proxy-$arg0["compositeName"]/wsdl-service">
     	<binding.ws uri="/service"/>
     </service>
-    <reference name="wsdl-delegated" promote="proxy_$arg0["compositeName"]/wsdl-reference">
+    <reference name="wsdl-delegated" promote="proxy-$arg0["compositeName"]/wsdl-reference">
     	<binding.ws name="wsdl" wsdlElement="${arg0["url"]}#wsdl.port($arg0["service"]/$arg0["port"])" wsdli:wsdlLocation="$arg0["url"]?wsdl"/>
     </reference>
 </composite>
