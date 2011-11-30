@@ -43,4 +43,26 @@ public interface ServiceManager {
     
     Application getCurrentApplication();
 
+    /**
+     * search in the application directories if the file is in
+     * @param file the file name as describe in the composite file
+     * @return the url if exists
+     */
+	String isFileInApplication(String file);
+
+	/**
+	 * get all the target available for a reference
+	 * @return a list of the available targets
+	 */
+	List<String> getAllTarget();
+
+	/**
+	 * Create class at the good location according as the type is a script or other source file
+	 * @param type must be Script, Implementation
+	 * @param fileName 
+	 */
+	void createFile(String type, String fileName);
+
+	void changePackage(String implemType, String classNameOrigin);
+
 }

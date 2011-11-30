@@ -124,7 +124,9 @@ public class ServiceProcessor implements ComplexProcessorItf{
 	public EObject saveElement(EObject eObject, Map<String, Object> params) {
 		Service service = (Service)eObject;
 		service.setName((String)params.get("name"));
+		if(params.get("promote")!=null && !((String)params.get("promote")).equals(""))
 		service.setPromote((String)params.get("promote"));
+		if(service.getInterface()!=null)
 		service.setInterface((Interface)this.complexProcessor.saveElement(service.getInterface(), params));
 		return service;
 	}

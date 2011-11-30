@@ -84,6 +84,7 @@ public class JavaInterfaceProcessor implements ComplexProcessorItf {
 	@Override
 	public EObject saveElement(EObject eObject, Map<String, Object> params) {
 		JavaInterface javaInterface = (JavaInterface)eObject;
+		if(params.get("interface")!=null)
 		javaInterface.setInterface((String)params.get("interface"));
 		return javaInterface;
 	}

@@ -26,7 +26,7 @@ public class BddInitImpl implements Runnable {
     public void initTowns() {
         EntityManager em = db.get();
         try {
-
+        	boolean canPersist = false;
             String filePath = "c:/Users/Adel/Documents/worldcitiespop.txt";
             int index = 0;
             FileReader fr = new FileReader(new File(filePath));
@@ -35,16 +35,21 @@ public class BddInitImpl implements Runnable {
             while ((line = br.readLine()) != null) {
                 if (index != 0) {
                     String[] datas = line.split(",");
+                    if(datas.length == 7 && datas[2].equals("Bro Lâm Peh")){
+                    	canPersist = true;
+                    }
                     if (index % 3000 == 1) {
                             em.getTransaction().begin();
                         }
-                    if (datas[0].equals("fr")) {
+                    if (datas.length == 7 && !datas[0].equals("fr") && canPersist) {
                         Town town = new Town(datas[0], datas[2], Double.parseDouble(datas[5]), Double.parseDouble(datas[6]));
                         em.persist(town);
                     }
                     if (index % 3000 == 0) {
                             em.getTransaction().commit();
                         }
+                    
+                    
                 }
                 index++;
             }

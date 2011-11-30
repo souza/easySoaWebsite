@@ -12,7 +12,7 @@ DATABSE
 	Mac
 		- Install MAMP
 		- Create a database named easysoasimplified
-
+		- Change your pom file in modifying the port by 8889 
 
 
 For the first launch, when you will create an account, you will have an error because tables wil be created at this moment so, the Town table is not initialized, and the creation form doesn't work. 
@@ -25,3 +25,8 @@ COMPILATION AND EXECUTION
 For the compilation and the launch of the website, you can use the following scripts :
 Windows : compile.bat then run.bat
 Mac : compile.sh then run.sh
+
+DOESN'T WORK ACTUALLY
+
+- add a binding
+- add an interface

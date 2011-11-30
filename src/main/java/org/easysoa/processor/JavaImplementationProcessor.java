@@ -2,6 +2,7 @@ package org.easysoa.processor;
 
 import java.util.Map;
 
+import org.easysoa.api.ServiceManager;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.stp.sca.JavaImplementation;
 import org.eclipse.stp.sca.ScaFactory;
@@ -17,6 +18,8 @@ public class JavaImplementationProcessor implements ComplexProcessorItf {
 
 	@Reference
 	protected ImplementationsProcessorItf implementationsProcessor; 
+	@Reference 
+	protected ServiceManager serviceManager;
 	
 	@Override
     public String getId() {
@@ -53,17 +56,8 @@ public class JavaImplementationProcessor implements ComplexProcessorItf {
     	sb.append("<div class=\"java-implementation-image\"></div>");
     	sb.append("Implementation : ");
     	sb.append("</td>");
-    	sb.append("<td>");
-    	sb.append("<select name=\"implementation-type\" id=\"implementation-type\" size=\"1\" onChange=\"changeImplementation()\">");
-    	for(String label : this.implementationsProcessor.allAvailableImplementationsLabel()){
-    		if(label.equals(this.getLabel(null))){
-    			sb.append("<option selected=\"selected\">"+label+"</option>");
-    		}
-    		else{
-    			sb.append("<option>"+label+"</option>");
-    		}
-    	}
-    	sb.append("</select>");
+    	sb.append("<td name=\"implementation-type\" id=\"implementation-type\" size=\"1\">");
+    	sb.append("Java");
     	sb.append("</td>");
     	sb.append("</tr>");
     	sb.append("<tr>");
@@ -75,7 +69,24 @@ public class JavaImplementationProcessor implements ComplexProcessorItf {
     	else sb.append("<input type=\"text\" id=\"implementation\" name=\"implementation\" size=\"40\" value=\"\"/>");
     	sb.append("</td>");
     	sb.append("</tr>");
+    	sb.append("<tr>");
+    	sb.append("<td colspan=\"2\">");
+    	sb.append("<div id=\"editor\"");
+    	sb.append("</div>");
+    	sb.append("</td>");
+    	sb.append("</tr>");
     	sb.append("</table>");
+    	
+    	if(javaImplementation.getClass_()!=null){
+    		String url = this.serviceManager.isFileInApplication(javaImplementation.getClass_());
+    		this.implementationsProcessor.setUrl(url);
+    		if(url!=null){
+    			this.implementationsProcessor.setEditorMode("java");
+    		}
+    	}
+    	else{
+    		this.implementationsProcessor.setUrl(null);
+    	}
     	return sb.toString();
     }
 
@@ -83,6 +94,7 @@ public class JavaImplementationProcessor implements ComplexProcessorItf {
 	public String getActionMenu(EObject eObject) {
 		StringBuffer sb = new StringBuffer();
 		sb.append("<a onclick=\"action('deleteImplementation')\">Delete</a>");
+		sb.append("<input type=\"submit\" value=\"Save\"/input>");
 		return sb.toString();
 	}
 

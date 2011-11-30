@@ -12,6 +12,7 @@ BASE DE DONNEE
 	Mac
 		- Installer MAMP
 		- Créer la base de données easysoasimplified
+		- Changer le fichier pom en modifiant le port par 8889 
 
 
 
@@ -25,3 +26,8 @@ COMPILATION ET EXECUTION
 Pour la compilation et le lancement du site, il faut utiliser les scripts suivants :
 Windows : compile.bat puis run.bat
 Mac : compile.sh puis run.sh
+
+CE QUI NE FONCTIONNE PAS ACTUELLEMENT
+
+- L'ajout d'une interface
+- L'ajout d'un binding

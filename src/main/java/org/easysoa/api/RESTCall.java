@@ -67,5 +67,35 @@ public interface RESTCall {
   @Path("/bindingContent")
   @Produces("text/plain")
   String getBindingContent(@FormParam("modelId")String modelId, @FormParam("id")String id);
+  
+  @GET
+  @Path("/implementationFileContent")
+  @Produces("text/plain")
+  String getImplementationFileContent();
+
+  @GET
+  @Path("/editorMode")
+  @Produces("text/plain")
+  String getEditorMode();
+  
+  @POST
+  @Path("/saveImplementation")
+  @Produces("text/plain")
+  void saveImplementation(@FormParam("content")String content);
+  
+  @GET
+  @Path("/existingImplementations")
+  @Produces("text/plain")
+  String getExistingImplementations();
+
+  @POST
+  @Path("/uploadImplementation")
+  @Produces("text/plain")
+  void uploadImplementation(@FormParam("file")String file, @FormParam("implementationType")String implementationType, @FormParam("id")String id);
+  
+  @POST
+  @Path("/createNewImplementation")
+  @Produces("text/plain")
+  void createNewImplementation(@FormParam("id")String id, @FormParam("className")String className, @FormParam("implemType")String implemType, @FormParam("createFile")boolean createFile);
 
 }

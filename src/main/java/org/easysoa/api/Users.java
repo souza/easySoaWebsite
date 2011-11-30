@@ -21,4 +21,5 @@ public interface Users {
     User modifyInformations(User user);
     User searchUser(Long id);
     User searchUser(String idString);
+	User getUser();
 }

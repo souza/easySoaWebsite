@@ -4,9 +4,11 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +24,8 @@ import org.easysoa.compositeTemplates.CompositeTemplateProcessorItf;
 import org.easysoa.jpa.Provider;
 import org.easysoa.model.Application;
 import org.easysoa.model.User;
+import org.eclipse.stp.sca.Component;
+import org.eclipse.stp.sca.ComponentService;
 import org.eclipse.stp.sca.Composite;
 import org.jdom.Document;
 import org.jdom.Element;
@@ -30,8 +34,11 @@ import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 import org.osoa.sca.annotations.Reference;
 import org.osoa.sca.annotations.Scope;
+import org.ow2.frascati.assembly.factory.processor.ProcessingContextImpl;
+import org.ow2.frascati.component.factory.api.MembraneGeneration;
 import org.ow2.frascati.parser.api.Parser;
 import org.ow2.frascati.parser.core.ParsingContextImpl;
+import org.ow2.frascati.util.FrascatiClassLoader;
 
 /**
  * 
@@ -51,9 +58,12 @@ public class ServiceManagerImpl implements ServiceManager {
 	public CompositeTemplateProcessorItf templates;
 	@Reference
 	public Utils utils;
+	@Reference
+	protected MembraneGeneration membraneGeneration;
 
 	private Composite composite;
 	private Application application;
+	private FrascatiClassLoader classLoader;
 
 	@Override
 	public void createService(User user, String name, String description,
@@ -61,6 +71,7 @@ public class ServiceManagerImpl implements ServiceManager {
 		Application application = new Application();
 		application.setDescription(description);
 		application.setName(name);
+		application.setPackageName(packageName);
 
 		try {
 			String path = user.getWorkspaceUrl();
@@ -74,10 +85,11 @@ public class ServiceManagerImpl implements ServiceManager {
 					+ File.separator + "main" + File.separator + "resources");
 			resourcesDirectory.mkdirs();
 			String compositeFile = resourcesDirectory.getPath()
-					+ File.separator + name + ".composite";
-			this.initializeComposite(application, compositeFile, templateName,
-					params);
+					+ File.separator + (String) params.get("compositeName")
+					+ ".composite";
+
 			application.setCompositeLocation(compositeFile);
+			application.setResources(resourcesDirectory.getPath());
 
 			packageName = packageName.replaceAll("\\.", File.separator
 					+ File.separator);
@@ -91,6 +103,15 @@ public class ServiceManagerImpl implements ServiceManager {
 			File implDirectory = new File(packageDirectory.getPath()
 					+ File.separator + "impl");
 			implDirectory.mkdirs();
+			membraneGeneration.addJavaSource(path + File.separator + "src"
+					+ File.separator + "main" + File.separator + "java");
+			membraneGeneration.addJavaSource(path + File.separator + "src"
+					+ File.separator + "main" + File.separator + "resources");
+			application.setSources(packageDirectory.getPath());
+			this.application = application;
+
+			this.initializeComposite(application, compositeFile, templateName,
+					params);
 
 			user.getProvidedApplications().add(application);
 
@@ -128,8 +149,20 @@ public class ServiceManagerImpl implements ServiceManager {
 			String location = application.getCompositeLocation();
 			location = location
 					.replaceAll(File.separator + File.separator, "/");
+			// TODO utiliser CL FraSCAti
+			classLoader = new FrascatiClassLoader();
+			String sourceFile = this.application.getSources().substring(
+					0,
+					this.application.getSources().indexOf(
+							this.application.getPackageName().replace(".",
+									File.separator)));
+			System.out.println("sourceFile : " + sourceFile + "#");
+			classLoader.addUrl(new URL("file://" + sourceFile));
+			String resourceFile = this.application.getResources();
+			classLoader.addUrl(new URL("file://" + resourceFile));
 			Composite composite = (Composite) compositeParser.parse(new QName(
-					"file://" + location), new ParsingContextImpl());
+					"file://" + location), new ProcessingContextImpl(
+					classLoader));
 			this.composite = composite;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -200,9 +233,62 @@ public class ServiceManagerImpl implements ServiceManager {
 
 			root.addContent(build);
 
+			Element dependencies = new Element("dependencies");
+
+			Element dependencyInterfaceWsdl = new Element("dependency");
+			Element dependencyInterfaceWsdlGroupId = new Element("groupId");
+			dependencyInterfaceWsdlGroupId.setText("org.ow2.frascati");
+			Element dependencyInterfaceWsdlArtifactId = new Element(
+					"artifactId");
+			dependencyInterfaceWsdlArtifactId
+					.setText("frascati-interface-wsdl");
+			Element dependencyInterfaceWsdlVersion = new Element("version");
+			dependencyInterfaceWsdlVersion.setText("${project.version}");
+			dependencyInterfaceWsdl.addContent(dependencyInterfaceWsdlGroupId);
+			dependencyInterfaceWsdl
+					.addContent(dependencyInterfaceWsdlArtifactId);
+			dependencyInterfaceWsdl.addContent(dependencyInterfaceWsdlVersion);
+			dependencies.addContent(dependencyInterfaceWsdl);
+
+			Element dependencyImplementationScriptJS = new Element("dependency");
+			Element dependencyImplementationScriptJSGroupId = new Element(
+					"groupId");
+			dependencyImplementationScriptJSGroupId.setText("org.ow2.frascati");
+			Element dependencyImplementationScriptJSArtifactId = new Element(
+					"artifactId");
+			dependencyImplementationScriptJSArtifactId
+					.setText("frascati-implementation-script-javascript");
+			Element dependencyImplementationScriptJSVersion = new Element(
+					"version");
+			dependencyImplementationScriptJSVersion
+					.setText("${project.version}");
+			dependencyImplementationScriptJS
+					.addContent(dependencyImplementationScriptJSGroupId);
+			dependencyImplementationScriptJS
+					.addContent(dependencyImplementationScriptJSArtifactId);
+			dependencyImplementationScriptJS
+					.addContent(dependencyImplementationScriptJSVersion);
+			dependencies.addContent(dependencyImplementationScriptJS);
+
+			Element dependencyBindingWS = new Element("dependency");
+			Element dependencyBindingWSGroupId = new Element("groupId");
+			dependencyBindingWSGroupId.setText("org.ow2.frascati");
+			Element dependencyBindingWSArtifactId = new Element("artifactId");
+			dependencyBindingWSArtifactId.setText("frascati-binding-ws");
+			Element dependencyBindingWSVersion = new Element("version");
+			dependencyBindingWSVersion.setText("${project.version}");
+			dependencyBindingWS.addContent(dependencyBindingWSGroupId);
+			dependencyBindingWS.addContent(dependencyBindingWSArtifactId);
+			dependencyBindingWS.addContent(dependencyBindingWSVersion);
+			dependencies.addContent(dependencyBindingWS);
+
+			root.addContent(dependencies);
+
 			Document document = new Document(root);
 			XMLOutputter out = new XMLOutputter(Format.getPrettyFormat());
-			out.output(document, new FileOutputStream(pomFile));
+			FileOutputStream fos = new FileOutputStream(pomFile);
+			out.output(document, fos);
+			fos.close();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -212,6 +298,8 @@ public class ServiceManagerImpl implements ServiceManager {
 			String compositeFile, String templateName,
 			Map<String, Object> params) {
 		try {
+			System.out.println("initialize composite");
+			this.templates.doActionAfterCreation(templateName, params);
 			String template = this.templates.getTemplate(templateName, params);
 			FileWriter fw = new FileWriter(compositeFile);
 			BufferedWriter output = new BufferedWriter(fw);
@@ -390,6 +478,68 @@ public class ServiceManagerImpl implements ServiceManager {
 	}
 
 	@Override
+	public void createFile(String type, String fileName) {
+		try {
+			System.out.println("createFile# type : " + type + " fileName : "
+					+ fileName);
+
+			File location = null;
+			if (type.equals("Script")) {
+				location = new File(this.application.getResources()
+						+ File.separator + "scripts");
+				location.mkdirs();
+				fileName = fileName.replace("/", File.separator);
+			} else if (type.equals("Velocity")) {
+				String[] fileNameVel = fileName.split("/");
+				location = new File(this.application.getResources()
+						+ File.separator + fileNameVel[0]);
+				if (!location.exists()) {
+					location.mkdir();
+				}
+				fileName = fileNameVel[1];
+
+			} else if (type.equals("Java")) {
+				fileName = "impl" + File.separator + fileName;
+				location = new File(this.application.getSources());
+			}
+			File createdFile = new File(location.getPath() + File.separator
+					+ fileName);
+			System.out.println("location : " + location.getPath()
+					+ File.separator + fileName);
+			createdFile.createNewFile();
+			if (type.equals("Java")) {
+				String classFileName = createdFile.getName();
+				String[] divClassFileName = classFileName.split("\\.");
+				classFileName = divClassFileName[0];
+				InputStream is = ServiceManagerImpl.class
+						.getResourceAsStream("/class.template");
+				BufferedReader br = new BufferedReader(
+						new InputStreamReader(is));
+				String s;
+				FileWriter fw = new FileWriter(createdFile.getPath());
+				BufferedWriter output = new BufferedWriter(fw);
+				while ((s = br.readLine()) != null) {
+					if (s.contains(":packageName")) {
+						s = s.replace(":packageName",
+								this.application.getPackageName() + ".impl");
+					}
+					if (s.contains(":className")) {
+						s = s.replace(":className", classFileName);
+					}
+					output.write(s + System.getProperty("line.separator"));
+				}
+				output.flush();
+				output.close();
+				fw.close();
+				br.close();
+				is.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
 	public void removeFile(String path) {
 		File file = new File(path);
 		if (file.isDirectory()) {
@@ -414,5 +564,130 @@ public class ServiceManagerImpl implements ServiceManager {
 	@Override
 	public Application getCurrentApplication() {
 		return this.application;
+	}
+
+	@Override
+	public String isFileInApplication(String file) {
+		System.out.println("File : " + file);
+		String url = this
+				.searchInSources(
+						file,
+						this.application
+								.getSources()
+								.substring(
+										0,
+										this.application
+												.getSources()
+												.indexOf(
+														this.application
+																.getPackageName()
+																.replaceAll(
+																		"\\.",
+																		File.separator
+																				+ File.separator)) - 1));
+		if (url == null) {
+			url = this.searchInResources(file, this.application.getResources());
+		}
+		System.out.println("Url : " + url);
+		return url;
+	}
+
+	private String searchInResources(String file, String resources) {
+		File dir = new File(resources);
+		String[] packageItems = file.split("/");
+		if (packageItems.length > 0) {
+			for (File f : dir.listFiles()) {
+				if (f.getName().equals(packageItems[0])) {
+					if (f.isFile() && packageItems.length == 1) {
+						return f.getPath();
+					}
+					if (f.isDirectory() && packageItems.length > 1) {
+						return searchInResources(
+								file.substring(file.indexOf("/") + 1),
+								f.getPath());
+					}
+				}
+			}
+		}
+		return null;
+	}
+
+	private String searchInSources(String file, String sources) {
+		File dir = new File(sources);
+		String[] packageItems = file.split("\\.");
+		if (packageItems.length > 0) {
+			for (File f : dir.listFiles()) {
+				if ((f.isFile() && f.getName()
+						.substring(0, f.getName().indexOf("."))
+						.equals(packageItems[0]))
+						|| (f.isDirectory() && f.getName().equals(
+								packageItems[0]))) {
+					if (f.isFile() && packageItems.length == 1) {
+						return f.getPath();
+					}
+					if (f.isDirectory() && packageItems.length > 1) {
+						return searchInSources(
+								file.substring(file.indexOf(".") + 1),
+								f.getPath());
+					}
+				}
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public List<String> getAllTarget() {
+		List<String> targets = new ArrayList<String>();
+		targets.add("");
+		for (Component component : this.composite.getComponent()) {
+			for (ComponentService service : component.getService()) {
+				targets.add(component.getName() + "/" + service.getName());
+			}
+		}
+		return targets;
+	}
+
+	@Override
+	public void changePackage(String implemType, String classNameOrigin) {
+		try {
+			File fileCreated = new File(this.application.getSources()
+					+ File.separator + "impl" + File.separator
+					+ classNameOrigin);
+			File copyFile = File.createTempFile("tmp", null);
+			
+			FileReader fr = new FileReader(fileCreated);
+			BufferedReader br = new BufferedReader(fr);
+			String s;
+			FileWriter fw = new FileWriter(copyFile);
+			BufferedWriter output = new BufferedWriter(fw);
+			while ((s = br.readLine()) != null) {
+				if (s.startsWith("package")) {
+					s = s.replace(s.substring(s.indexOf("package")+7), " "+this.application.getPackageName()+".impl;");
+				}
+				output.write(s + System.getProperty("line.separator"));
+			}
+			output.flush();
+			output.close();
+			fr.close();
+			fw.close();
+			br.close();
+			
+			fr = new FileReader(copyFile);
+			br = new BufferedReader(fr);
+			fw = new FileWriter(fileCreated);
+			output = new BufferedWriter(fw);
+			while ((s = br.readLine()) != null) {
+				output.write(s + System.getProperty("line.separator"));
+			}
+			output.flush();
+			output.close();
+			fr.close();
+			fw.close();
+			br.close();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

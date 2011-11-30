@@ -16,11 +16,13 @@ import org.easysoa.jpa.Provider;
 import org.easysoa.model.Civility;
 import org.easysoa.model.User;
 import org.osoa.sca.annotations.Reference;
+import org.osoa.sca.annotations.Scope;
 
 /**
  *
  * @author dirix
  */
+@Scope("COMPOSITE")
 public class UserImpl implements Users {
 
     private static final String WORKSPACE_PATH = System.getProperty("user.home")+File.separator+"Documents"+File.separator+"easysoawebsitesimplified";
@@ -30,6 +32,8 @@ public class UserImpl implements Users {
     public Friends friends;
     @Reference
     public Utils utils;
+    
+    public User user;
 
     @Override
     public User connect(String login, String password) {
@@ -116,4 +120,9 @@ public class UserImpl implements Users {
         Long id = Long.parseLong(idString);
         return this.searchUser(id);
     }
+    
+    @Override
+    public User getUser() {
+		return user;
+	}
 }

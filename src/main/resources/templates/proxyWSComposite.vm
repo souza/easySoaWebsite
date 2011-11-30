@@ -5,10 +5,6 @@
 #macro ( getForm )
 		<table class="table">
 		<tr>
-			<td>Composite Name :</td>
-			<td><input type="text" id="compositeName" name="compositeName" /></td>
-		</tr>
-		<tr>
 			<td>Url :</td>
 			<td><input type="text" id="url" name="url" /></td>
 		</tr>
@@ -27,18 +23,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <composite xmlns="http://www.osoa.org/xmlns/sca/1.0" xmlns:wsdli="http://www.w3.org/2004/08/wsdl-instance" xmlns:frascati="http://frascati.ow2.org/xmlns/sca/1.1" name="$arg0["compositeName"]">
     <component name="proxy-$arg0["compositeName"]">
+    	<frascati:implementation.script script="scripts/${arg0["service"]}.js"/>
     	<service name="wsdl-service">
-    		<interface.wsdl interface="$arg0["url"]"/>
+    		<interface.wsdl interface="$arg0["url"]?wsdl#wsdl.interface($arg0["port"])"/>
     	</service>
     	<reference name="wsdl-reference">
-    		<interface.wsdl interface ="$arg0["url"]"/>
+    		<interface.wsdl interface ="$arg0["url"]?wsdl#wsdl.interface($arg0["port"])"/>
     	</reference>
     </component>
     <service name="serviceProxy" promote="proxy-$arg0["compositeName"]/wsdl-service">
     	<binding.ws name="ws" uri="/service"/>
+    	<interface.wsdl interface="$arg0["url"]?wsdl#wsdl.interface($arg0["port"])"/>
     </service>
     <reference name="wsdl-delegated" promote="proxy-$arg0["compositeName"]/wsdl-reference">
-    	<binding.ws name="wsdl" wsdlElement="${arg0["url"]}#wsdl.port($arg0["service"]/$arg0["port"])" wsdli:wsdlLocation="$arg0["url"]?wsdl"/>
+    	<binding.ws name="wsdl" wsdlElement="http:// ${wsdlGenerator.getGeneratedPackageMirror()}/#wsdl.port($arg0["service"]/$arg0["port"])" wsdli:wsdlLocation="$arg0["url"]?wsdl"/>
+    	<interface.wsdl interface="$arg0["url"]?wsdl#wsdl.interface($arg0["port"])"/>
     </reference>
 </composite>
 #end

@@ -34,8 +34,30 @@ public class Application
     @XmlAttribute(name = "origin")
     @XmlSchemaType(name = "anyURI")
     protected Application origin;
+    @XmlAttribute(name = "sources", required = true)
+    protected String sources;
+    @XmlAttribute(name = "resources", required = true)
+    protected String resources;
+    @XmlAttribute(name = "packageName", required = true)
+    protected String packageName;
     
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
+    public String getSources() {
+		return sources;
+	}
+
+	public void setSources(String sources) {
+		this.sources = sources;
+	}
+
+	public String getResources() {
+		return resources;
+	}
+
+	public void setResources(String resources) {
+		this.resources = resources;
+	}
+
+	@Id @GeneratedValue(strategy=GenerationType.AUTO)
     public Long getId(){
         return this.id;
     }
@@ -78,5 +100,11 @@ public class Application
         this.description = description;
     }
 
+    public String getPackageName() {
+		return packageName;
+	}
     
+    public void setPackageName(String packageName) {
+		this.packageName = packageName;
+	}
 }

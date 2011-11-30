@@ -2,6 +2,7 @@ package org.easysoa.processor;
 
 import java.util.Map;
 
+import org.easysoa.api.ServiceManager;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.stp.sca.Binding;
 import org.eclipse.stp.sca.Interface;
@@ -17,6 +18,8 @@ public class ReferenceProcessor implements ComplexProcessorItf {
 	protected ComplexProcessorItf complexProcessor;
 	@Reference
 	protected InterfaceProcessorItf interfaceProcessor;
+	@Reference
+	protected ServiceManager serviceManager;
 	
 	@Override
 	public String getId() {
@@ -99,8 +102,16 @@ public class ReferenceProcessor implements ComplexProcessorItf {
 	    			sb.append("Target : ");
 	    			sb.append("</td>");
 	    			sb.append("<td colspan=\"2\">");
-	    			if(reference.getTarget()!=null)sb.append("<input type=\"text\" id=\"target\" name=\"target\" size=\"40\" value=\""+reference.getTarget()+"\"/><br/>");
-	    			else sb.append("<input type=\"text\" id=\"target\" name=\"target\" size=\"40\" value=\"\"/><br/>");
+	    				sb.append("<select name=\"target\" id=\"target\" size=\"1\">");
+    		    	for(String target : this.serviceManager.getAllTarget()){
+    		    		if(reference.getTarget()!=null && reference.getTarget().equals(target)){
+    		    			sb.append("<option selected=\"selected\">"+target+"</option>");
+    		    		}
+    		    		else{
+    		    			sb.append("<option>"+target+"</option>");
+    		    		}
+    		    	}
+    		    	sb.append("</select>");
 	    			sb.append("</td>");
 	    			sb.append("</tr>");
 	    			sb.append("<tr>");
@@ -131,8 +142,12 @@ public class ReferenceProcessor implements ComplexProcessorItf {
 	public EObject saveElement(EObject eObject, Map<String, Object> params) {
 		org.eclipse.stp.sca.Reference reference = (org.eclipse.stp.sca.Reference)eObject;
 		reference.setName((String)params.get("name"));
+		System.out.println("promote : #"+(String)params.get("promote")+"#");
+		if(params.get("promote")!=null && !((String)params.get("promote")).equals(""))
 		reference.setPromote((String)params.get("promote"));
+		if(params.get("target")!=null && !((String)params.get("target")).equals(""))
 		reference.setTarget((String)params.get("target"));
+		if(reference.getInterface()!=null)
 		reference.setInterface((Interface)this.complexProcessor.saveElement(reference.getInterface(), params));
 		return reference;
 	}

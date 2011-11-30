@@ -277,7 +277,7 @@ body { /*background-color:#959595;*/
 
 
 .table td {
-	
+	width: 50%;
 }
 
 #serviceView {
@@ -318,12 +318,10 @@ textarea {
 }
 
 .component_frame_line {
-	float: left;
 	height: auto;
 	margin-left: auto;
 	margin-right: auto;
 	padding: 10px 30px;
-	position: relative;
 	width: 540px;
 }
 

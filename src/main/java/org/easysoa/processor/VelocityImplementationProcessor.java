@@ -2,6 +2,7 @@ package org.easysoa.processor;
 
 import java.util.Map;
 
+import org.easysoa.api.ServiceManager;
 import org.eclipse.emf.ecore.EObject;
 import org.json.simple.JSONObject;
 import org.osoa.sca.annotations.Reference;
@@ -12,6 +13,8 @@ public class VelocityImplementationProcessor implements ComplexProcessorItf {
 
 	@Reference
 	protected ImplementationsProcessorItf implementationsProcessor; 
+	@Reference 
+	protected ServiceManager serviceManager;
 	
 	@Override
 	public String getId() {
@@ -49,38 +52,35 @@ public class VelocityImplementationProcessor implements ComplexProcessorItf {
     	sb.append("<div class=\"velocity-implementation-image\"></div>");
     	sb.append("Implementation : ");
     	sb.append("</td>");
-    	sb.append("<td>");
-    	sb.append("<select name=\"implementation-type\" id=\"implementation-type\" size=\"1\" onChange=\"changeImplementation()\">");
-    	for(String label : this.implementationsProcessor.allAvailableImplementationsLabel()){
-    		if(label.equals(this.getLabel(null))){
-    			sb.append("<option selected=\"selected\">"+label+"</option>");
-    		}
-    		else{
-    			sb.append("<option>"+label+"</option>");
-    		}
-    	}
-    	sb.append("</select>");
+    	sb.append("<td name=\"implementation-type\" id=\"implementation-type\" size=\"1\">");
+    	sb.append("Velocity");
     	sb.append("</td>");
     	sb.append("</tr>");
     	sb.append("<tr>");
     	sb.append("<td>");
-    	sb.append("Location : ");
+    	sb.append("Location/Default : ");
     	sb.append("</td>");
     	sb.append("<td>");
-    	if(velocityImplementation.getLocation()!=null)sb.append("<input type=\"text\" id=\"location\" name=\"location\" size=\"40\" value=\""+velocityImplementation.getLocation()+"\"/>");
-    	else sb.append("<input type=\"text\" id=\"location\" name=\"location\" size=\"40\" value=\"\"/>");
+    	sb.append("<input type=\"text\" id=\"implementation\" name=\"implementation\" size=\"40\" value=\""+velocityImplementation.getLocation()+"/"+velocityImplementation.getDefault()+"\"/>");
     	sb.append("</td>");
     	sb.append("</tr>");
     	sb.append("<tr>");
-    	sb.append("<td>");
-    	sb.append("Default : ");
-    	sb.append("</td>");
-    	sb.append("<td>");
-    	if(velocityImplementation.getDefault()!=null)sb.append("<input type=\"text\" id=\"default\" name=\"default\" size=\"40\" value=\""+velocityImplementation.getDefault()+"\"/>");
-    	else sb.append("<input type=\"text\" id=\"default\" name=\"default\" size=\"40\" value=\"\"/>");
+    	sb.append("<td colspan=\"2\">");
+    	sb.append("<div id=\"editor\"");
+    	sb.append("</div>");
     	sb.append("</td>");
     	sb.append("</tr>");
     	sb.append("</table>");
+    	if(velocityImplementation.getLocation()!=null && velocityImplementation.getDefault()!=null){
+    		String url = this.serviceManager.isFileInApplication(velocityImplementation.getLocation()+"."+velocityImplementation.getDefault());
+    		this.implementationsProcessor.setUrl(url);
+    		if(url!=null){
+    			this.implementationsProcessor.setEditorMode("java");
+    		}
+    	}
+    	else{
+    		this.implementationsProcessor.setUrl(null);
+    	}
     	return sb.toString();
 	}
 
@@ -88,14 +88,17 @@ public class VelocityImplementationProcessor implements ComplexProcessorItf {
 	public String getActionMenu(EObject eObject) {
 		StringBuffer sb = new StringBuffer();
 		sb.append("<a onclick=\"action('deleteImplementation')\">Delete</a>");
+		sb.append("<input type=\"submit\" value=\"Save\"/input>");
 		return sb.toString();
 	}
 
 	@Override
 	public EObject saveElement(EObject eObject, Map<String, Object> params) {
 		VelocityImplementation implem = (VelocityImplementation)eObject;
-		implem.setLocation((String)params.get("location"));
-		implem.setDefault((String)params.get("default"));
+		String implementation = (String)params.get("implementation");
+		String[] implemParams = implementation.split("/");
+		implem.setLocation(implemParams[0]);
+		implem.setDefault(implemParams[1]);
 		return implem;
 	}
 

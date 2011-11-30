@@ -111,6 +111,7 @@ public class ComponentServiceProcessor implements ComplexProcessorItf {
 	public EObject saveElement(EObject eObject, Map<String, Object> params) {
 		ComponentService componentService = (ComponentService)eObject;
 		componentService.setName((String)params.get("name"));
+		if(componentService.getInterface()!=null)
 		componentService.setInterface((Interface)this.complexProcessor.saveElement(componentService.getInterface(), params));
 		return componentService;
 	}

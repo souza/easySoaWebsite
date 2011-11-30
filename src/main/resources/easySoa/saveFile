@@ -1,3 +1,0 @@
-$serviceManager.saveFile($fileName,$fileContent)
-$request.getSession().setAttribute("file",$fileContent)
-$response.sendRedirect("service.html")

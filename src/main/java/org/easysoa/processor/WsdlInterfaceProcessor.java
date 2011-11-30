@@ -84,6 +84,7 @@ public class WsdlInterfaceProcessor implements ComplexProcessorItf {
 	@Override
 	public EObject saveElement(EObject eObject, Map<String, Object> params) {
 		WSDLPortType wsdlInterface = (WSDLPortType)eObject;
+		if(params.get("interface")!=null)
 		wsdlInterface.setInterface((String)params.get("interface"));
 		return wsdlInterface;
 	}

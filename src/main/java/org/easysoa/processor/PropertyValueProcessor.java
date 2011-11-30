@@ -81,6 +81,7 @@ public class PropertyValueProcessor implements ComplexProcessorItf{
 	public String getActionMenu(EObject eObject) {
 		StringBuffer sb = new StringBuffer();
 		sb.append("<a onclick=\"action('deleteComponentProperty')\">Delete</a>");
+		sb.append("<input type=\"submit\" value=\"Save\"/input>");
 		return sb.toString();
 	}
 
@@ -88,7 +89,9 @@ public class PropertyValueProcessor implements ComplexProcessorItf{
 	public EObject saveElement(EObject eObject, Map<String, Object> params) {
 		PropertyValue property = (PropertyValue)eObject;
 		property.setName((String)params.get("name"));
+		if(params.get("type")!=null && !((String)params.get("type")).equals(""))
 		property.setType(new QName((String)params.get("type")));
+		if(params.get("value")!=null && !((String)params.get("value")).equals(""))
 		property.setValue((String)params.get("value"));
 		return property;
 	}

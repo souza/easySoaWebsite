@@ -1,5 +1,5 @@
-#parse("banner.html")
-#parse("header.html") 
+#parse("banner.html") #parse("header.html")
+
 <script type="text/javascript">
 	activateMenuTabSelected('services');
 	displayTab('editor_frame');
@@ -16,38 +16,58 @@
 <div id="ide">
 	<div id="serviceView"></div>
 	<form name="elementView" id="elementView">
-	<div id="component_frame">
-		<div id="menuObj"></div>
-		<div id="component_frame_content"></div>
-	</div>
+		<div id="component_frame">
+			<div id="menuObj"></div>
+			<div id="component_frame_content"></div>
+		</div>
 	</form>
 </div>
 <script>
 	show();
-	
-		$('form').submit(function() {
-			var id = tree.getSelectedItemId();
-			var selectId = tree.getSelectedItemId();
-			var globalId = "";
-			while(selectId != "composite+"){
-				globalId = selectId+globalId;
-				selectId = tree.getParentId(selectId);
-			}
-			var name = $("input[name=name]").val();
-			$.post("/rest/saveElement", $(this).serialize()+"&id="+globalId,function(data){
-				tree.setItemText(id,name,null);
-				var elem = id.split('+');
-				var newId = "";
-				for(var i=0; i < elem.length-1; i++){
-					if(i!=0)newId = newId+"+"+elem[i];
-					else newId = elem[i];
-				}
-				tree.changeItemId(id,newId+"+"+name);
-			});
-	    	return false;
-	    	});
-		
-</script>
 
+	$('form').submit(
+			function() {
+				var id = tree.getSelectedItemId();
+				var selectId = tree.getSelectedItemId();
+				var globalId = "";
+				while (selectId != "composite+") {
+					globalId = selectId + globalId;
+					selectId = tree.getParentId(selectId);
+				}
+				if (globalId.indexOf("implementation") != -1) {
+					var implementation = $("input[name=implementation]").val();
+					saveImplementation(getEditorValue());
+					$.post("/rest/saveElement", $(this).serialize() + "&id="
+							+ globalId, function(data) {
+						tree.setItemText(id, implementation, null);
+						var elem = id.split('+');
+						var newId = "";
+						for ( var i = 0; i < elem.length - 1; i++) {
+							if (i != 0)
+								newId = newId + "+" + elem[i];
+							else
+								newId = elem[i];
+						}
+						tree.changeItemId(id, newId + "+" + implementation);
+					});
+				} else {
+					var name = $("input[name=name]").val();
+					$.post("/rest/saveElement", $(this).serialize() + "&id="
+							+ globalId, function(data) {
+						tree.setItemText(id, name, null);
+						var elem = id.split('+');
+						var newId = "";
+						for ( var i = 0; i < elem.length - 1; i++) {
+							if (i != 0)
+								newId = newId + "+" + elem[i];
+							else
+								newId = elem[i];
+						}
+						tree.changeItemId(id, newId + "+" + name);
+					});
+				}
+				return false;
+			});
+</script>
 </body>
 </html>

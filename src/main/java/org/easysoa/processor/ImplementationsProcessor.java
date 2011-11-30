@@ -15,11 +15,16 @@ import org.eclipse.stp.sca.Implementation;
 import org.eclipse.stp.sca.JavaImplementation;
 import org.eclipse.stp.sca.SCAImplementation;
 import org.eclipse.stp.sca.ScaFactory;
+import org.eclipse.stp.sca.domainmodel.frascati.FrascatiFactory;
+import org.eclipse.stp.sca.domainmodel.frascati.FrascatiPackage;
+import org.eclipse.stp.sca.domainmodel.frascati.ScriptImplementation;
 import org.osoa.sca.annotations.Reference;
+import org.osoa.sca.annotations.Scope;
 import org.ow2.frascati.metamodel.web.VelocityImplementation;
 import org.ow2.frascati.metamodel.web.WebFactory;
 import org.ow2.frascati.metamodel.web.WebPackage;
 
+@Scope("COMPOSITE")
 public class ImplementationsProcessor implements ImplementationsProcessorItf {
 
 	@Reference
@@ -28,6 +33,8 @@ public class ImplementationsProcessor implements ImplementationsProcessorItf {
 	protected Utils utils;
 	@Reference
 	protected ServiceManager serviceManager;
+	private String url;
+	private String editorMode;
 
 	public List<String> allAvailableImplementationsLabel() {
 		List<String> labels = new ArrayList<String>();
@@ -40,7 +47,9 @@ public class ImplementationsProcessor implements ImplementationsProcessorItf {
 	@Override
 	public String getImplementationView(Composite composite, String modelId,
 			String id) {
+		System.out.println("getImplementationView id : "+id);
 		for (ComplexProcessorItf processor : this.processors) {
+			System.out.println("label : "+processor.getLabel(null));
 			if (processor.getLabel(null).equals(id)) {
 				this.modifyImplementation(composite, modelId,
 						processor.getNewEObject(null));
@@ -73,18 +82,22 @@ public class ImplementationsProcessor implements ImplementationsProcessorItf {
 						if (osoaImplementation instanceof VelocityImplementation) {
 							eReference = WebPackage.Literals.DOCUMENT_ROOT__IMPLEMENTATION_VELOCITY;
 						}
+						if (osoaImplementation instanceof ScriptImplementation) {
+							eReference = FrascatiPackage.Literals.DOCUMENT_ROOT__IMPLEMENTATION_SCRIPT;
+						}
 						// TODO: manage other implementations, as BPEL, Spring,
 						// etc.
 
 						((FeatureMap.Internal) component
 								.getImplementationGroup()).clear();
+						if(eReference != null){
 						((FeatureMap.Internal) component
 								.getImplementationGroup())
 								.add(org.eclipse.stp.sca.ScaPackage.Literals.COMPONENT__IMPLEMENTATION_GROUP,
 										org.eclipse.emf.ecore.util.FeatureMapUtil
 												.createEntry(eReference,
 														osoaImplementation));
-
+						}
 						System.out.println(component.getImplementation()
 								.getClass());
 					}
@@ -141,6 +154,18 @@ public class ImplementationsProcessor implements ImplementationsProcessorItf {
 
 			return osoaJavaImplementation;
 		}
+		if (oasisImplementation instanceof ScriptImplementation) {
+			ScriptImplementation oasisScriptImplementation = (ScriptImplementation) oasisImplementation;
+			// Create an OSOA JavaImplementation.
+			ScriptImplementation osoaScriptImplementation = FrascatiFactory.eINSTANCE.createScriptImplementation();
+			// Copy the Java class name.
+			osoaScriptImplementation.setScript(oasisScriptImplementation
+					.getScript());
+
+			// TODO: Copy or transform other properties.
+
+			return oasisScriptImplementation;
+		}
 
 		// TODO: BPEL implementation.
 
@@ -149,6 +174,36 @@ public class ImplementationsProcessor implements ImplementationsProcessorItf {
 		// TODO: other implementations.
 
 		// Else do nothing.
+		return null;
+	}
+
+	@Override
+	public String getUrl() {
+		return url;
+	}
+
+	@Override
+	public void setUrl(String url) {
+		this.url = url;
+	}
+	
+	@Override
+	public String getEditorMode() {
+		return editorMode;
+	}
+	
+	@Override
+	public void setEditorMode(String editorMode) {
+		this.editorMode = editorMode;
+	}
+	
+	@Override
+	public EObject createImplementation(String label){
+		for (ComplexProcessorItf processor : this.processors) {
+			if (processor.getLabel(null).equals(label)) {
+				return processor.getNewEObject(null);
+			}
+		}
 		return null;
 	}
 

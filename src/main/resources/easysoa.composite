@@ -27,6 +27,7 @@
 	xmlns:frascati="http://frascati.ow2.org/xmlns/sca/1.1" xmlns:web="http://frascati.ow2.org/xmlns/web/1.0"
 	xmlns:sca="http://tuscany.apache.org/xmlns/sca/1.0" name="EasySOA">
 	<service name="test" promote="Connection/connection" />
+	<service name="bdd" promote="BddInit/init" />
 
 	<component name="EasySOA">
 		<service name="Velocity">
@@ -42,14 +43,25 @@
 		<reference name="socialNetwork" target="SocialNetwork/socialNetwork" />
 		<reference name="utils" target="Utils/utils" />
 		<reference name="compositeTemplates" target="TemplateProcessor/processor" />
+		<reference name="implementations" target="ImplementationsProcessor/processor" />
+		<reference name="uploader" target="Uploader/Servlet" />
 	</component>
-
-	<!--<component name="ComponentTemplate"> <service name="component-panel"> 
-		<interface.java interface="javax.servlet.Servlet"/> <sca:binding.http uri="/component/panel"/> 
-		</service> <web:implementation.velocity location="templates" default="component.html"/> 
-		<reference name="serviceManager" target="ServiceManager/serviceManager"/> 
-		</component> -->
-
+	
+	<component name="CodeGeneratorWsdlToJS">
+		<implementation.java class="org.easysoa.impl.CodeGeneratorWsdlToJSImpl" />
+		<service name="codeGeneratorWsdlToJS">
+			<interface.java interface="org.easysoa.api.CodeGenerator" />
+		</service>
+		<reference name="wsdlCompiler">
+			<interface.java interface="org.ow2.frascati.wsdl.WsdlCompiler" />
+			<binding.sca uri="org.ow2.frascati.FraSCAti/assembly-factory/wsdl-compiler/wsdl-compiler" />
+		</reference>
+		<reference name="membraneGeneration">
+			<interface.java interface="org.ow2.frascati.component.factory.api.MembraneGeneration" />
+			<binding.sca uri="org.ow2.frascati.FraSCAti/component-factory/membrane-generation" />
+		</reference>
+		<reference name="serviceManager" target="ServiceManager/serviceManager" />
+	</component>
 
 	<component name="Friends">
 		<implementation.java class="org.easysoa.impl.FriendsImpl" />
@@ -85,6 +97,10 @@
 		</reference>
 		<reference name="utils" target="Utils/utils" />
 		<reference name="templates" target="TemplateProcessor/processor" />
+		<reference name="membraneGeneration">
+			<interface.java interface="org.ow2.frascati.component.factory.api.MembraneGeneration" />
+			<binding.sca uri="org.ow2.frascati.FraSCAti/component-factory/membrane-generation" />
+		</reference>
 	</component>
 
 	<component name="SocialNetwork">
@@ -152,6 +168,7 @@
 			<interface.java interface="org.easysoa.processor.ComplexProcessorItf" />
 		</service>
 		<reference name="implementationsProcessor" target="ImplementationsProcessor/processor" />
+		<reference name="serviceManager" target="ServiceManager/serviceManager" />
 	</component>
 	<wire source="Processor/processors" target="JavaImplementationProcessor/java-implementation" />
 	<wire source="ImplementationsProcessor/processors" target="JavaImplementationProcessor/java-implementation" />
@@ -163,11 +180,26 @@
 			<interface.java interface="org.easysoa.processor.ComplexProcessorItf" />
 		</service>
 		<reference name="implementationsProcessor" target="ImplementationsProcessor/processor" />
+		<reference name="serviceManager" target="ServiceManager/serviceManager" />
 	</component>
 	<wire source="Processor/processors"
 		target="VelocityImplementationProcessor/velocity-implementation" />
 	<wire source="ImplementationsProcessor/processors"
 		target="VelocityImplementationProcessor/velocity-implementation" />
+		
+		<component name="ScriptImplementationProcessor">
+		<implementation.java
+			class="org.easysoa.processor.ScriptImplementationProcessor" />
+		<service name="script-implementation">
+			<interface.java interface="org.easysoa.processor.ComplexProcessorItf" />
+		</service>
+		<reference name="implementationsProcessor" target="ImplementationsProcessor/processor" />
+		<reference name="serviceManager" target="ServiceManager/serviceManager" />
+	</component>
+	<wire source="Processor/processors"
+		target="ScriptImplementationProcessor/script-implementation" />
+	<wire source="ImplementationsProcessor/processors"
+		target="ScriptImplementationProcessor/script-implementation" />
 
 	<component name="JavaInterfaceProcessor">
 		<implementation.java class="org.easysoa.processor.JavaInterfaceProcessor" />
@@ -254,6 +286,7 @@
 		</service>
 		<reference name="complexProcessor" target="Processor/processor" />
 		<reference name="interfaceProcessor" target="InterfaceProcessor/processor" />
+		<reference name="serviceManager" target="ServiceManager/serviceManager" />
 	</component>
 	<wire source="Processor/processors" target="ReferenceProcessor/reference" />
 
@@ -285,6 +318,7 @@
 		</service>
 		<reference name="complexProcessor" target="Processor/processor" />
 		<reference name="implementationProcessor" target="ImplementationsProcessor/processor" />
+		
 	</component>
 	<wire source="Processor/processors" target="ComponentProcessor/componentProcessor" />
 
@@ -371,6 +405,15 @@
 		<service name="template">
 			<interface.java interface="org.easysoa.compositeTemplates.CompositeTemplateItf" />
 		</service>
+		<reference name="wsdlGenerator" target="CodeGeneratorWsdlToJS/codeGeneratorWsdlToJS"/>
 	</component>
 	<wire source="TemplateProcessor/templates" target="ProxyWSTemplate/template" />
+	
+	<component name="Uploader">
+    <implementation.java class="org.easysoa.impl.UploaderImpl"/>
+    <service name="Servlet">
+      <interface.java interface="javax.servlet.Servlet"/>
+    </service>
+    <reference name="serviceManager" target="ServiceManager/serviceManager" />
+  </component>
 </composite>

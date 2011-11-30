@@ -118,7 +118,9 @@ public class ComponentReferenceProcessor implements ComplexProcessorItf {
 	public EObject saveElement(EObject eObject, Map<String, Object> params) {
 		ComponentReference componentReference = (ComponentReference)eObject;
 		componentReference.setName((String)params.get("name"));
+		if(params.get("target")!=null && !((String)params.get("target")).equals(""))
 		componentReference.setTarget((String)params.get("target"));
+		if(componentReference.getInterface()!=null)
 		componentReference.setInterface((Interface)this.complexProcessor.saveElement(componentReference.getInterface(), params));
 		return componentReference;
 	}

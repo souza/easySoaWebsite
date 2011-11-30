@@ -4,9 +4,6 @@
 
 #macro ( getForm )
 <table class="table">
-	<tr>
-		<td>Composite Name :</td><td><input type="text" id="compositeName" name="compositeName" /></td>
-	</tr>
 </table>
 #end
 
