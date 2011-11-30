@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>add implementation</title>
+<link rel="stylesheet" href="css/main.css" />
+<link rel="stylesheet" href="css/style.css" />
+<script>
+	function valid() {
+		document.form.submit();
+		var list = document.getElementById("implementation-type");
+		var implemType = list.options[list.options.selectedIndex].value;
+		var file = document.getElementById("filename").value;
+		opener.createImplementationUpload(file, implemType);
+	}
+</script>
+
+</head>
+<body>
+#set($allImplementations = $implementations.allAvailableImplementationsLabel())
+<!-- 	<form> -->
+<!-- 		<input type="file" id="file" name="file" /> -->
+<!-- 		<input type="hidden" id="path" name="path" /> -->
+<!-- 		<select name="implementation-type" id="implementation-type"> -->
+<!-- 		#foreach($implem in $allImplementations) -->
+<!-- 			<option> -->
+<!-- 				$implem -->
+<!-- 			</option> -->
+<!-- 		#end -->
+<!-- 		</select> -->
+<!-- 		<br /> <input class="orange button" type="button" -->
+<!-- 			onclick="valid()" value="OK" /> <input class="orange button" -->
+<!-- 			type="button" onclick="opener.closePopUp()" value="CANCEL" /> -->
+<!-- 	</form> -->
+<form name="form" action="uploadComposite" method="post" enctype="multipart/form-data">
+  File: <input type="file" id="filename" name="filename" size="40"/>
+  <br/>
+  <select name="implementation-type" id="implementation-type"> 
+ 		#foreach($implem in $allImplementations) 
+ 			<option>
+ 				$implem 
+ 			</option>
+ 		#end 
+ 		</select>
+  <input class="button orange" type="button" value="Upload" onClick="valid()"/>
+</form>
+</body>
+</html>

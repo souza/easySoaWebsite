@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>add implementation</title>
+	<link rel="stylesheet" href="css/main.css" />
+	<link rel="stylesheet" href="css/style.css" />
+	<script>
+		function validate() {
+			var list = document.getElementById("list");
+			var choice = list.options[list.options.selectedIndex].value;
+			opener.createImplementation(choice);
+		}
+	</script>
+	
+</head>
+<body>
+<span>What do you want to do?</span>
+<form>
+	<select name="list" id="list">
+		<option value="upload">Upload source</option>
+		<option value="create">Create an implementation</option>
+	</select> 
+	<br/>
+	<input class="orange button" type="button" onclick="validate()" value="OK" /> 
+	<input class="orange button" type="button" onclick="opener.closePopUp()" value="CANCEL" />
+</form>
+</body>
+</html>

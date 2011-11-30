@@ -1,0 +1,5 @@
+$uploader.service($request,$response)
+
+#if($request.getHeader("Referer"))
+$response.sendRedirect($request.getHeader("Referer"))
+#end

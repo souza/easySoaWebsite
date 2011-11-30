@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>add implementation</title>
+	<link rel="stylesheet" href="css/main.css" />
+	<link rel="stylesheet" href="css/style.css" />
+	<script src="js/ideActions.js"></script>
+	<script>
+		function validate() {
+			var className = document.getElementById("className").value;
+			var list = document.getElementById("implementation-type");
+			var implemType = list.options[list.options.selectedIndex].value;
+			opener.createNewImplementation(className, implemType);
+		}
+	</script>
+	
+</head>
+<body>
+#set($allImplementations = $implementations.allAvailableImplementationsLabel())
+<form>
+	<input id="className" type="text" value="class name" onClick="document.getElementById('className').value = ''"/> 
+	<select name="implementation-type" id="implementation-type">
+		#foreach($implem in $allImplementations)
+			<option>
+				$implem
+			</option>
+		#end
+	</select>
+	<br/>
+	<input class="orange button" type="button" onclick="validate()" value="OK" /> 
+	<input class="orange button" type="button" onclick="opener.closePopUp()" value="CANCEL" />
+</form>
+</body>
+</html>
